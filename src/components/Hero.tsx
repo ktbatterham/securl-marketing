@@ -1,6 +1,14 @@
 const GRADE_COLOR = "#10b981";
 
 export function Hero() {
+  function handleScan(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const input = (e.currentTarget.elements.namedItem("url") as HTMLInputElement).value.trim();
+    if (!input) return;
+    const target = input.startsWith("http") ? input : `https://${input}`;
+    window.open(`https://app.securl.online?target=${encodeURIComponent(target)}`, "_blank");
+  }
+
   return (
     <section className="mx-auto max-w-6xl px-6 pb-32 pt-28 text-center">
       {/* Eyebrow pill */}
@@ -34,29 +42,49 @@ export function Hero() {
         <span className="font-semibold text-zinc-200">ranked by what to fix first.</span>
       </p>
 
-      {/* CTAs */}
-      <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <a
-          href="https://app.securl.online"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-glow rounded-2xl bg-[#10b981] px-9 py-4 text-base font-bold text-[#030b06]"
+      {/* URL scan input */}
+      <form onSubmit={handleScan} className="mx-auto mt-10 flex max-w-xl flex-col gap-3 sm:flex-row">
+        <div
+          className="relative flex flex-1 items-center overflow-hidden rounded-2xl transition-all duration-200 focus-within:ring-1 focus-within:ring-[#10b981]/50"
+          style={{
+            background: "rgba(4,14,8,0.60)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            backdropFilter: "blur(20px)",
+          }}
         >
-          Scan your site — it's free
-        </a>
-        <a
-          href="#compare"
-          className="glass rounded-2xl px-9 py-4 text-base font-semibold text-zinc-300 transition-all duration-200 hover:text-white"
-          style={{ borderColor: "rgba(255,255,255,0.1)" }}
+          <svg
+            className="ml-4 h-4 w-4 shrink-0 text-zinc-500"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round"
+              d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+          </svg>
+          <input
+            name="url"
+            type="text"
+            placeholder="yourdomain.com"
+            autoComplete="off"
+            spellCheck={false}
+            className="flex-1 bg-transparent px-3 py-4 text-base text-white placeholder-zinc-600 outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          className="btn-glow shrink-0 rounded-2xl bg-[#10b981] px-7 py-4 text-base font-bold text-[#030b06]"
         >
-          See how it compares
+          Scan now
+        </button>
+      </form>
+
+      <p className="mt-4 text-sm text-zinc-600">No login. No install. Results in seconds.</p>
+      <div className="mt-3">
+        <a href="#compare" className="text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-300">
+          See how it compares →
         </a>
       </div>
 
-      <p className="mt-5 text-sm text-zinc-600">No login. No install. Results in seconds.</p>
-
       {/* Grade preview card */}
-      <div className="mx-auto mt-24 max-w-md">
+      <div className="mx-auto mt-20 max-w-md">
         {/* Outer glow ring */}
         <div
           className="relative rounded-[2rem] p-px"
