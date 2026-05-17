@@ -7,20 +7,79 @@ import { Footer } from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#040c08]">
-      {/* Gradient backdrop */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          background: [
-            "radial-gradient(ellipse 90% 70% at 18% -5%, rgba(16,185,129,0.32), transparent 55%)",
-            "radial-gradient(ellipse 50% 45% at 88% 8%, rgba(20,184,166,0.14), transparent 52%)",
-            "radial-gradient(ellipse 60% 55% at 80% 95%, rgba(5,150,105,0.12), transparent 55%)",
-            "radial-gradient(ellipse 35% 30% at 5% 85%, rgba(52,211,153,0.07), transparent 48%)",
-          ].join(","),
-        }}
-      />
+    <div className="noise relative min-h-screen overflow-x-hidden bg-[#030b06]">
+      {/* Animated gradient blobs — fixed so they persist while scrolling */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {/* Primary emerald — top left, large */}
+        <div
+          className="blob-a absolute rounded-full"
+          style={{
+            width: "80vw",
+            height: "75vh",
+            top: "-20vh",
+            left: "-15vw",
+            background: "radial-gradient(ellipse at center, rgba(16,185,129,0.44) 0%, transparent 65%)",
+          }}
+        />
+        {/* Teal — top right */}
+        <div
+          className="blob-b absolute rounded-full"
+          style={{
+            width: "55vw",
+            height: "60vh",
+            top: "-10vh",
+            right: "-10vw",
+            background: "radial-gradient(ellipse at center, rgba(20,184,166,0.28) 0%, transparent 65%)",
+          }}
+        />
+        {/* Violet — dead centre viewport, always visible */}
+        <div
+          className="blob-c absolute rounded-full"
+          style={{
+            width: "70vw",
+            height: "70vh",
+            top: "15vh",
+            left: "15vw",
+            background: "radial-gradient(ellipse at center, rgba(99,102,241,0.20) 0%, transparent 65%)",
+          }}
+        />
+        {/* Emerald — bottom right */}
+        <div
+          className="blob-b absolute rounded-full"
+          style={{
+            width: "60vw",
+            height: "60vh",
+            bottom: "-15vh",
+            right: "-10vw",
+            background: "radial-gradient(ellipse at center, rgba(16,185,129,0.26) 0%, transparent 65%)",
+            animationDelay: "-8s",
+          }}
+        />
+        {/* Violet — bottom left */}
+        <div
+          className="blob-a absolute rounded-full"
+          style={{
+            width: "50vw",
+            height: "50vh",
+            bottom: "-5vh",
+            left: "-10vw",
+            background: "radial-gradient(ellipse at center, rgba(129,140,248,0.18) 0%, transparent 65%)",
+            animationDelay: "-14s",
+          }}
+        />
+        {/* Teal — mid-left, fills the mid-viewport gap */}
+        <div
+          className="blob-c absolute rounded-full"
+          style={{
+            width: "40vw",
+            height: "45vh",
+            top: "35vh",
+            left: "-5vw",
+            background: "radial-gradient(ellipse at center, rgba(20,184,166,0.16) 0%, transparent 65%)",
+            animationDelay: "-6s",
+          }}
+        />
+      </div>
 
       <div className="relative z-10">
         <Nav />

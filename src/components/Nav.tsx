@@ -1,10 +1,16 @@
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#040c08]/80 backdrop-blur-xl">
+    <header className="glass-heavy sticky top-0 z-50 rounded-none border-b-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="/" className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2.5">
+          <div
+            className="flex h-8 w-8 items-center justify-center rounded-xl text-sm font-black text-white"
+            style={{ background: "linear-gradient(135deg, #10b981, #14b8a6)", boxShadow: "0 0 16px rgba(16,185,129,0.5)" }}
+          >
+            S
+          </div>
           <span className="text-lg font-black tracking-[-0.04em] text-white">
-            Sec<span className="text-[#10b981]">URL</span>
+            Sec<span className="text-gradient-brand">URL</span>
           </span>
         </a>
 
@@ -18,9 +24,9 @@ export function Nav() {
           href="https://app.securl.online"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-xl bg-[#10b981] px-4 py-2 text-sm font-bold text-[#040c08] transition-all hover:bg-[#34d399] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
+          className="btn-glow rounded-xl bg-[#10b981] px-5 py-2 text-sm font-bold text-[#030b06]"
         >
-          Launch app
+          Launch app →
         </a>
       </div>
     </header>
