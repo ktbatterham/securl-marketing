@@ -22,14 +22,6 @@ export function Footer() {
             <a href="#features"     className="transition-colors hover:text-zinc-300">Features</a>
             <a href="#compare"      className="transition-colors hover:text-zinc-300">Compare</a>
             <a href="#how-it-works" className="transition-colors hover:text-zinc-300">How it works</a>
-            <a
-              href="https://app.securl.online"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-zinc-300"
-            >
-              Launch app ↗
-            </a>
           </nav>
 
           <p className="text-sm text-zinc-700">© {new Date().getFullYear()} SecURL</p>

@@ -21,12 +21,11 @@ export function Nav() {
         </nav>
 
         <a
-          href="https://app.securl.online"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
+          onClick={e => { e.preventDefault(); document.querySelector('input[name="url"]')?.scrollIntoView({ behavior: "smooth", block: "center" }); (document.querySelector('input[name="url"]') as HTMLInputElement)?.focus(); }}
           className="btn-glow rounded-xl bg-[#10b981] px-5 py-2 text-sm font-bold text-[#030b06]"
         >
-          Launch app →
+          Scan now
         </a>
       </div>
     </header>
