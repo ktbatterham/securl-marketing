@@ -1,6 +1,134 @@
-const GRADE_COLOR = "#10b981";
+import { useEffect, useRef, useState } from "react";
+
+/* ── Example scan data ─────────────────────────────────────────────────── */
+const EXAMPLES = [
+  {
+    domain: "github.com",
+    grade: "A",
+    score: 91,
+    label: "Excellent Posture",
+    gradeColor: "#22c55e",
+    glowColor: "rgba(34,197,94,0.22)",
+    borderColor: "rgba(34,197,94,0.40)",
+    ringBg: "rgba(34,197,94,0.08)",
+    shadowRing: "0 0 0 6px rgba(34,197,94,0.07), 0 0 40px rgba(34,197,94,0.22)",
+    labelColor: "#4ade80",
+    labelBg: "rgba(34,197,94,0.10)",
+    labelBorder: "rgba(34,197,94,0.25)",
+    critical: 0,
+    warning: 1,
+    signals: 18,
+    chips: [
+      { label: "HSTS preloaded", color: "emerald" },
+      { label: "DNSSEC enabled", color: "emerald" },
+      { label: "Strong CSP", color: "emerald" },
+    ],
+  },
+  {
+    domain: "portswigger.net",
+    grade: "B",
+    score: 74,
+    label: "Good Posture",
+    gradeColor: "#10b981",
+    glowColor: "rgba(16,185,129,0.25)",
+    borderColor: "rgba(16,185,129,0.45)",
+    ringBg: "rgba(16,185,129,0.10)",
+    shadowRing: "0 0 0 6px rgba(16,185,129,0.08), 0 0 40px rgba(16,185,129,0.25)",
+    labelColor: "#34d399",
+    labelBg: "rgba(16,185,129,0.10)",
+    labelBorder: "rgba(16,185,129,0.25)",
+    critical: 0,
+    warning: 3,
+    signals: 14,
+    chips: [
+      { label: "COOP missing", color: "amber" },
+      { label: "DNSSEC off", color: "amber" },
+      { label: "security.txt", color: "zinc" },
+    ],
+  },
+  {
+    domain: "stackoverflow.com",
+    grade: "C",
+    score: 55,
+    label: "Fair Posture",
+    gradeColor: "#f59e0b",
+    glowColor: "rgba(245,158,11,0.22)",
+    borderColor: "rgba(245,158,11,0.40)",
+    ringBg: "rgba(245,158,11,0.08)",
+    shadowRing: "0 0 0 6px rgba(245,158,11,0.06), 0 0 40px rgba(245,158,11,0.20)",
+    labelColor: "#fcd34d",
+    labelBg: "rgba(245,158,11,0.10)",
+    labelBorder: "rgba(245,158,11,0.25)",
+    critical: 0,
+    warning: 5,
+    signals: 11,
+    chips: [
+      { label: "No DMARC policy", color: "amber" },
+      { label: "Server exposed", color: "amber" },
+      { label: "No CAA records", color: "zinc" },
+    ],
+  },
+  {
+    domain: "httpbin.org",
+    grade: "D",
+    score: 31,
+    label: "Needs Attention",
+    gradeColor: "#f97316",
+    glowColor: "rgba(249,115,22,0.22)",
+    borderColor: "rgba(249,115,22,0.40)",
+    ringBg: "rgba(249,115,22,0.08)",
+    shadowRing: "0 0 0 6px rgba(249,115,22,0.06), 0 0 40px rgba(249,115,22,0.20)",
+    labelColor: "#fb923c",
+    labelBg: "rgba(249,115,22,0.10)",
+    labelBorder: "rgba(249,115,22,0.25)",
+    critical: 2,
+    warning: 4,
+    signals: 7,
+    chips: [
+      { label: "No HSTS", color: "red" },
+      { label: "No CSP", color: "red" },
+      { label: "Open CORS", color: "amber" },
+    ],
+  },
+];
+
+const RING_R = 52;
+const RING_SIZE = 120;
+const RING_CIRC = parseFloat((2 * Math.PI * RING_R).toFixed(2));
+
+function chipStyle(color: string) {
+  if (color === "emerald")
+    return { color: "#4ade80", background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)" };
+  if (color === "amber")
+    return { color: "#fcd34d", background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" };
+  if (color === "red")
+    return { color: "#f87171", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)" };
+  return { color: "#a1a1aa", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" };
+}
 
 export function Hero() {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const rotate = () => {
+      setVisible(false);
+      timerRef.current = setTimeout(() => {
+        setIdx((i) => (i + 1) % EXAMPLES.length);
+        setVisible(true);
+      }, 380);
+    };
+    const interval = setInterval(rotate, 4800);
+    return () => {
+      clearInterval(interval);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  const ex = EXAMPLES[idx];
+  const offset = parseFloat((RING_CIRC * (1 - ex.score / 100)).toFixed(2));
+
   function handleScan(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const input = (e.currentTarget.elements.namedItem("url") as HTMLInputElement).value.trim();
@@ -83,14 +211,15 @@ export function Hero() {
         </a>
       </div>
 
-      {/* Grade preview card */}
+      {/* ── Rotating grade preview card ──────────────────────────────────── */}
       <div className="mx-auto mt-20 max-w-md">
-        {/* Outer glow ring */}
+        {/* Outer glow ring — colour transitions with content */}
         <div
           className="relative rounded-[2rem] p-px"
           style={{
-            background: "linear-gradient(135deg, rgba(16,185,129,0.4) 0%, rgba(20,184,166,0.2) 50%, rgba(99,102,241,0.15) 100%)",
-            boxShadow: "0 0 80px rgba(16,185,129,0.2), 0 40px 96px rgba(0,0,0,0.6)",
+            background: `linear-gradient(135deg, ${ex.borderColor} 0%, rgba(20,184,166,0.15) 50%, rgba(99,102,241,0.12) 100%)`,
+            boxShadow: `0 0 80px ${ex.glowColor}, 0 40px 96px rgba(0,0,0,0.6)`,
+            transition: "background 0.6s ease, box-shadow 0.6s ease",
           }}
         >
           <div
@@ -101,78 +230,133 @@ export function Hero() {
               WebkitBackdropFilter: "blur(24px)",
             }}
           >
-            {/* Grade ring */}
-            <div className="flex flex-col items-center gap-3">
-              <div
-                className="relative flex h-24 w-24 items-center justify-center rounded-full text-4xl font-black text-white"
-                style={{
-                  background: `rgba(16,185,129,0.1)`,
-                  border: `2px solid rgba(16,185,129,0.45)`,
-                  boxShadow: `0 0 0 6px rgba(16,185,129,0.08), 0 0 40px rgba(16,185,129,0.25)`,
-                }}
-              >
-                B
-              </div>
-              <span
-                className="rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
-                style={{
-                  color: GRADE_COLOR,
-                  background: "rgba(16,185,129,0.10)",
-                  border: "1px solid rgba(16,185,129,0.25)",
-                }}
-              >
-                Good Posture
-              </span>
-              <p className="font-mono text-xs text-zinc-500">portswigger.net</p>
-            </div>
-
-            {/* Finding chips */}
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              {[
-                { label: "COOP missing", color: "amber" },
-                { label: "DNSSEC off",   color: "amber" },
-                { label: "security.txt", color: "zinc"  },
-              ].map(({ label, color }) => (
-                <span
-                  key={label}
-                  className="rounded-full border px-3 py-1 text-[11px] font-semibold"
-                  style={
-                    color === "amber"
-                      ? { color: "#fcd34d", background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" }
-                      : { color: "#a1a1aa", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }
-                  }
-                >
-                  {label}
-                </span>
-              ))}
-            </div>
-
-            {/* Stats */}
+            {/* Animated content wrapper */}
             <div
-              className="mt-6 grid grid-cols-3 gap-3 border-t pt-6"
-              style={{ borderColor: "rgba(255,255,255,0.06)" }}
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(6px)",
+                transition: "opacity 0.35s ease, transform 0.35s ease",
+              }}
             >
-              {[
-                { label: "Critical", value: "0",  accent: "rgba(244,63,94,0.6)"  },
-                { label: "Warning",  value: "3",  accent: "rgba(245,158,11,0.6)" },
-                { label: "Signals",  value: "14", accent: "rgba(16,185,129,0.6)" },
-              ].map(({ label, value, accent }) => (
-                <div
-                  key={label}
-                  className="glass-highlight relative overflow-hidden rounded-xl px-3 py-3"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
-                >
+              {/* Grade ring — SVG for smooth score arc */}
+              <div className="flex flex-col items-center gap-3">
+                <div className="relative" style={{ width: RING_SIZE, height: RING_SIZE }}>
+                  {/* Glow */}
                   <div
-                    className="absolute inset-y-0 left-0 w-[2.5px] rounded-r-[2px]"
-                    style={{ background: accent }}
+                    className="pointer-events-none absolute inset-0 rounded-full"
+                    style={{
+                      background: `radial-gradient(circle, ${ex.glowColor} 0%, transparent 70%)`,
+                      filter: "blur(16px)",
+                    }}
                   />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">{label}</p>
-                  <p className="mt-1.5 text-2xl font-black text-white">{value}</p>
+                  <svg
+                    viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
+                    width={RING_SIZE}
+                    height={RING_SIZE}
+                    className="relative -rotate-90"
+                  >
+                    <circle
+                      cx={RING_SIZE / 2} cy={RING_SIZE / 2} r={RING_R}
+                      fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8"
+                    />
+                    <circle
+                      cx={RING_SIZE / 2} cy={RING_SIZE / 2} r={RING_R}
+                      fill="none" stroke={ex.gradeColor} strokeWidth="8"
+                      strokeLinecap="round"
+                      strokeDasharray={RING_CIRC}
+                      strokeDashoffset={offset}
+                      filter={`drop-shadow(0 0 5px ${ex.gradeColor}aa)`}
+                      style={{ transition: "stroke-dashoffset 0.7s ease, stroke 0.5s ease" }}
+                    />
+                  </svg>
+                  {/* Grade letter */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span
+                      className="text-4xl font-black text-white"
+                      style={{ transition: "color 0.4s ease" }}
+                    >
+                      {ex.grade}
+                    </span>
+                  </div>
                 </div>
-              ))}
+
+                <span
+                  className="rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
+                  style={{
+                    color: ex.labelColor,
+                    background: ex.labelBg,
+                    border: `1px solid ${ex.labelBorder}`,
+                    transition: "color 0.4s ease, background 0.4s ease, border-color 0.4s ease",
+                  }}
+                >
+                  {ex.label}
+                </span>
+                <p className="font-mono text-xs text-zinc-500">{ex.domain}</p>
+              </div>
+
+              {/* Finding chips */}
+              <div className="mt-6 flex flex-wrap justify-center gap-2">
+                {ex.chips.map(({ label, color }) => (
+                  <span
+                    key={label}
+                    className="rounded-full border px-3 py-1 text-[11px] font-semibold"
+                    style={chipStyle(color)}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </div>
+
+              {/* Stats */}
+              <div
+                className="mt-6 grid grid-cols-3 gap-3 border-t pt-6"
+                style={{ borderColor: "rgba(255,255,255,0.06)" }}
+              >
+                {[
+                  { label: "Critical", value: ex.critical, accent: "rgba(244,63,94,0.6)" },
+                  { label: "Warning",  value: ex.warning,  accent: "rgba(245,158,11,0.6)" },
+                  { label: "Signals",  value: ex.signals,  accent: ex.gradeColor },
+                ].map(({ label, value, accent }) => (
+                  <div
+                    key={label}
+                    className="glass-highlight relative overflow-hidden rounded-xl px-3 py-3"
+                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
+                  >
+                    <div
+                      className="absolute inset-y-0 left-0 w-[2.5px] rounded-r-[2px]"
+                      style={{ background: accent }}
+                    />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">{label}</p>
+                    <p className="mt-1.5 text-2xl font-black text-white">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Rotation dots */}
+        <div className="mt-5 flex items-center justify-center gap-2">
+          {EXAMPLES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setVisible(false);
+                setTimeout(() => { setIdx(i); setVisible(true); }, 380);
+              }}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: i === idx ? 20 : 6,
+                height: 6,
+                background: i === idx ? ex.gradeColor : "rgba(255,255,255,0.15)",
+              }}
+              aria-label={`View ${EXAMPLES[i].domain} example`}
+            />
+          ))}
+        </div>
+        <p className="mt-3 text-center text-[11px] text-zinc-600">
+          Example scans — try any domain above
+        </p>
       </div>
     </section>
   );
