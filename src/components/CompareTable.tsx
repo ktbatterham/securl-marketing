@@ -4,6 +4,7 @@ const rows = [
   { label: "DNS & email trust (SPF, DKIM, DMARC, DNSSEC)", securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Public disclosure signals",                    securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Third-party surface mapping",                  securl: true,  secheaders: false, observatory: false, sslabs: false },
+  { label: "Passive intelligence (tech stack, AI surface, exposure)", securl: true, secheaders: false, observatory: false, sslabs: false },
   { label: "Prioritised, ranked findings",                 securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "OWASP / MITRE mapping",                        securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Monitoring over time",                         securl: true,  secheaders: false, observatory: false, sslabs: false },
@@ -120,7 +121,7 @@ export function CompareTable() {
             style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" }}
           >
             <p className="text-sm text-zinc-400">
-              One URL. One grade. Everything ranked by what to fix first.{" "}
+              One URL. One grade. Active checks plus passive intelligence — everything ranked by what to fix first.{" "}
               <a
                 href="https://app.securl.online"
                 target="_blank"

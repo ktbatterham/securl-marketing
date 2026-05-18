@@ -28,9 +28,9 @@ const features = [
     glow: "rgba(99,102,241,0.07)",
   },
   {
-    icon: "📢",
-    title: "Disclosure signals",
-    body: "security.txt, responsible disclosure policy, public CVEs — the signals that tell researchers you're serious.",
+    icon: "🔍",
+    title: "Passive Intelligence",
+    body: "Technology stack, CDN, telemetry, AI surface, exposure indicators — derived from observation alone. No active probing, no footprint.",
     accent: "rgba(251,191,36,0.12)",
     glow: "rgba(251,191,36,0.06)",
   },
@@ -69,7 +69,7 @@ export function FeatureGrid() {
           <span className="text-gradient-brand">The full picture.</span>
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-400">
-          Eight signal categories. One posture read. The breadth that used to require four separate tools.
+          Eight signal categories. One posture read. Including Passive Intelligence — signals derived from observation alone, with no active probing.
         </p>
       </div>
 
