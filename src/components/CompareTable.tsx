@@ -1,10 +1,11 @@
 const rows = [
   { label: "HTTP security headers",                        securl: true,  secheaders: true,  observatory: true,  sslabs: false },
   { label: "TLS / SSL configuration",                      securl: true,  secheaders: false, observatory: true,  sslabs: true  },
-  { label: "DNS & email trust (SPF, DKIM, DMARC, DNSSEC)", securl: true,  secheaders: false, observatory: false, sslabs: false },
+  { label: "DNS & email trust (SPF, DKIM, DMARC, DNSSEC, MTA-STS, TLS-RPT, BIMI)", securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Public disclosure signals",                    securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Third-party surface mapping",                  securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Passive intelligence (tech stack, AI surface, exposure)", securl: true, secheaders: false, observatory: false, sslabs: false },
+  { label: "Session replay & analytics vendor detection (30+ tools)", securl: true, secheaders: false, observatory: false, sslabs: false },
   { label: "Prioritised, ranked findings",                 securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "OWASP / MITRE mapping",                        securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Monitoring over time",                         securl: true,  secheaders: false, observatory: false, sslabs: false },

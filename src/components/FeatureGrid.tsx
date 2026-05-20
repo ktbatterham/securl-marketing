@@ -16,7 +16,7 @@ const features = [
   {
     icon: "📡",
     title: "DNS & email trust",
-    body: "SPF, DKIM, DMARC, DNSSEC — the signals that tell the world whether to trust mail from your domain.",
+    body: "SPF, DKIM, DMARC, DNSSEC, MTA-STS, TLS-RPT, and BIMI — a complete read of your email trust chain, not just the basics.",
     accent: "rgba(20,184,166,0.14)",
     glow: "rgba(20,184,166,0.07)",
   },
@@ -30,7 +30,7 @@ const features = [
   {
     icon: "🔍",
     title: "Passive Intelligence",
-    body: "Technology stack, CDN, telemetry, AI surface, exposure indicators — derived from observation alone. No active probing, no footprint.",
+    body: "Detects 30+ analytics, telemetry, and session replay vendors alongside stack, CDN, AI surface, and exposure indicators — observation only, no active probing, no footprint.",
     accent: "rgba(251,191,36,0.12)",
     glow: "rgba(251,191,36,0.06)",
   },
