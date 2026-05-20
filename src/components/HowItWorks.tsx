@@ -9,7 +9,7 @@ const steps = [
   {
     num: "02",
     title: "SecURL scans",
-    body: "SecURL reads headers, DNS, TLS config, HTML, and public records passively — no active probing, no noise, no footprint.",
+    body: "SecURL reads headers, DNS (SPF, DMARC, MTA-STS, TLS-RPT, BIMI), TLS config, HTML, and public records passively — no active probing, no noise, no footprint.",
     accent: "rgba(20,184,166,0.2)",
     numColor: "linear-gradient(135deg, #14b8a6, #10b981)",
   },
