@@ -122,7 +122,7 @@ export function CompareTable() {
             style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" }}
           >
             <p className="text-sm text-zinc-400">
-              One URL. One grade. Active checks plus passive intelligence — everything ranked by what to fix first.{" "}
+              One URL. One grade. Public-response checks plus passive intelligence — everything ranked by what to fix first.{" "}
               <a
                 href="https://app.securl.online"
                 target="_blank"
