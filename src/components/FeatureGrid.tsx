@@ -61,7 +61,7 @@ export function FeatureGrid() {
   return (
     <section id="features" className="mx-auto max-w-6xl px-6 pb-32">
       <div className="mb-16 text-center">
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.26em] text-[#10b981]">
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.26em] text-[#14b8a6]">
           What you get
         </p>
         <h2 className="text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
@@ -77,7 +77,7 @@ export function FeatureGrid() {
         {features.map((f) => (
           <div
             key={f.title}
-            className="glass-highlight group relative overflow-hidden rounded-[1.5rem] p-6 transition-all duration-300 hover:-translate-y-1"
+            className="glass-highlight group relative overflow-hidden rounded-[1.75rem] p-7 transition-all duration-300 hover:-translate-y-1"
             style={{
               background: "rgba(4,14,8,0.55)",
               border: "1px solid rgba(255,255,255,0.08)",

@@ -19,7 +19,7 @@ function Check({ yes, highlight }: { yes: boolean; highlight?: boolean }) {
         className="inline-flex h-7 w-7 items-center justify-center rounded-full"
         style={{ background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.3)", boxShadow: "0 0 10px rgba(16,185,129,0.2)" }}
       >
-        <svg className="h-3.5 w-3.5 text-[#10b981]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+        <svg className="h-3.5 w-3.5 text-[#14b8a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>
       </span>
@@ -47,7 +47,7 @@ export function CompareTable() {
   return (
     <section id="compare" className="mx-auto max-w-6xl px-6 pb-32">
       <div className="mb-16 text-center">
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.26em] text-[#10b981]">
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.26em] text-[#14b8a6]">
           Why SecURL
         </p>
         <h2 className="text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
@@ -127,7 +127,7 @@ export function CompareTable() {
                 href="https://app.securl.online"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold text-[#10b981] transition-colors hover:text-[#34d399]"
+                className="font-bold text-[#14b8a6] transition-colors hover:text-[#34d399]"
               >
                 Try it free →
               </a>
