@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 /* ── Example scan data ─────────────────────────────────────────────────── */
@@ -6,11 +7,10 @@ const EXAMPLES = [
     domain: "github.com",
     grade: "A",
     score: 91,
-    label: "Excellent Posture",
+    label: "Excellent posture",
     gradeColor: "#22c55e",
     glowColor: "rgba(34,197,94,0.22)",
     borderColor: "rgba(34,197,94,0.40)",
-    ringBg: "rgba(34,197,94,0.08)",
     shadowRing: "0 0 0 6px rgba(34,197,94,0.07), 0 0 40px rgba(34,197,94,0.22)",
     labelColor: "#4ade80",
     labelBg: "rgba(34,197,94,0.10)",
@@ -28,15 +28,14 @@ const EXAMPLES = [
     domain: "portswigger.net",
     grade: "B",
     score: 74,
-    label: "Good Posture",
-    gradeColor: "#10b981",
-    glowColor: "rgba(16,185,129,0.25)",
-    borderColor: "rgba(16,185,129,0.45)",
-    ringBg: "rgba(16,185,129,0.10)",
-    shadowRing: "0 0 0 6px rgba(16,185,129,0.08), 0 0 40px rgba(16,185,129,0.25)",
-    labelColor: "#34d399",
-    labelBg: "rgba(16,185,129,0.10)",
-    labelBorder: "rgba(16,185,129,0.25)",
+    label: "Good posture",
+    gradeColor: "#3b82f6",
+    glowColor: "rgba(59,130,246,0.25)",
+    borderColor: "rgba(59,130,246,0.45)",
+    shadowRing: "0 0 0 6px rgba(59,130,246,0.08), 0 0 40px rgba(59,130,246,0.25)",
+    labelColor: "#93c5fd",
+    labelBg: "rgba(59,130,246,0.10)",
+    labelBorder: "rgba(59,130,246,0.25)",
     critical: 0,
     warning: 3,
     signals: 14,
@@ -50,11 +49,10 @@ const EXAMPLES = [
     domain: "stackoverflow.com",
     grade: "C",
     score: 55,
-    label: "Fair Posture",
+    label: "Mixed posture",
     gradeColor: "#f59e0b",
     glowColor: "rgba(245,158,11,0.22)",
     borderColor: "rgba(245,158,11,0.40)",
-    ringBg: "rgba(245,158,11,0.08)",
     shadowRing: "0 0 0 6px rgba(245,158,11,0.06), 0 0 40px rgba(245,158,11,0.20)",
     labelColor: "#fcd34d",
     labelBg: "rgba(245,158,11,0.10)",
@@ -72,11 +70,10 @@ const EXAMPLES = [
     domain: "httpbin.org",
     grade: "D",
     score: 31,
-    label: "Needs Attention",
+    label: "Needs attention",
     gradeColor: "#f97316",
     glowColor: "rgba(249,115,22,0.22)",
     borderColor: "rgba(249,115,22,0.40)",
-    ringBg: "rgba(249,115,22,0.08)",
     shadowRing: "0 0 0 6px rgba(249,115,22,0.06), 0 0 40px rgba(249,115,22,0.20)",
     labelColor: "#fb923c",
     labelBg: "rgba(249,115,22,0.10)",
@@ -103,7 +100,7 @@ function chipStyle(color: string) {
     return { color: "#fcd34d", background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" };
   if (color === "red")
     return { color: "#f87171", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)" };
-  return { color: "#a1a1aa", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" };
+  return { color: "#94a3b8", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" };
 }
 
 export function Hero() {
@@ -143,16 +140,13 @@ export function Hero() {
       <div
         className="mb-8 inline-flex items-center gap-2.5 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-[0.22em]"
         style={{
-          background: "rgba(16,185,129,0.08)",
-          border: "1px solid rgba(16,185,129,0.22)",
-          color: "#34d399",
+          background: "rgba(181,106,44,0.12)",
+          border: "1px solid rgba(181,106,44,0.25)",
+          color: "#f0d5bc",
           backdropFilter: "blur(12px)",
         }}
       >
-        <span
-          className="h-1.5 w-1.5 rounded-full"
-          style={{ background: "#10b981", boxShadow: "0 0 6px #10b981" }}
-        />
+        <Sparkles className="h-3.5 w-3.5 text-[#d89a63]" />
         Security posture intelligence
       </div>
 
@@ -164,24 +158,24 @@ export function Hero() {
       </h1>
 
       {/* Sub */}
-      <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
+      <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl">
         Paste a URL. Get a graded read of your site's entire external security posture — headers,
         DNS trust, TLS, third-party surface, and public disclosure signals, all{" "}
-        <span className="font-semibold text-zinc-200">ranked by what to fix first.</span>
+        <span className="font-semibold text-slate-200">ranked by what to fix first.</span>
       </p>
 
       {/* URL scan input */}
       <form onSubmit={handleScan} className="mx-auto mt-10 flex max-w-xl flex-col gap-3 sm:flex-row">
         <div
-          className="relative flex flex-1 items-center overflow-hidden rounded-2xl transition-all duration-200 focus-within:ring-1 focus-within:ring-[#10b981]/50"
+          className="relative flex flex-1 items-center overflow-hidden rounded-2xl transition-all duration-200 focus-within:ring-1 focus-within:ring-[#b56a2c]/50"
           style={{
-            background: "rgba(4,14,8,0.60)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            background: "rgba(2,6,23,0.60)",
+            border: "1px solid rgba(255,255,255,0.10)",
             backdropFilter: "blur(20px)",
           }}
         >
           <svg
-            className="ml-4 h-4 w-4 shrink-0 text-zinc-500"
+            className="ml-4 h-4 w-4 shrink-0 text-slate-500"
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
           >
             <path strokeLinecap="round" strokeLinejoin="round"
@@ -193,31 +187,31 @@ export function Hero() {
             placeholder="yourdomain.com"
             autoComplete="off"
             spellCheck={false}
-            className="flex-1 bg-transparent px-3 py-4 text-base text-white placeholder-zinc-600 outline-none"
+            className="flex-1 bg-transparent px-3 py-4 text-base text-white placeholder-slate-600 outline-none"
           />
         </div>
         <button
           type="submit"
-          className="btn-glow shrink-0 rounded-2xl bg-[#10b981] px-7 py-4 text-base font-bold text-[#030b06]"
+          className="btn-glow shrink-0 rounded-2xl px-7 py-4 text-base font-bold text-white"
+          style={{ background: "#b56a2c" }}
         >
           Scan now
         </button>
       </form>
 
-      <p className="mt-4 text-sm text-zinc-600">No login. No install. Results in seconds.</p>
+      <p className="mt-4 text-sm text-slate-600">No login. No install. Results in seconds.</p>
       <div className="mt-3">
-        <a href="#compare" className="text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-300">
+        <a href="#compare" className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-300">
           See how it compares →
         </a>
       </div>
 
       {/* ── Rotating grade preview card ──────────────────────────────────── */}
       <div className="mx-auto mt-20 max-w-md">
-        {/* Outer glow ring — colour transitions with content */}
         <div
           className="relative rounded-[2rem] p-px"
           style={{
-            background: `linear-gradient(135deg, ${ex.borderColor} 0%, rgba(20,184,166,0.15) 50%, rgba(99,102,241,0.12) 100%)`,
+            background: `linear-gradient(135deg, ${ex.borderColor} 0%, rgba(181,106,44,0.12) 50%, rgba(122,166,182,0.10) 100%)`,
             boxShadow: `0 0 80px ${ex.glowColor}, 0 40px 96px rgba(0,0,0,0.6)`,
             transition: "background 0.6s ease, box-shadow 0.6s ease",
           }}
@@ -225,12 +219,11 @@ export function Hero() {
           <div
             className="glass-highlight relative overflow-hidden rounded-[calc(2rem-1px)] p-8"
             style={{
-              background: "rgba(4,14,8,0.65)",
+              background: "linear-gradient(135deg, rgba(11,18,32,0.98), rgba(16,24,39,0.95))",
               backdropFilter: "blur(24px)",
               WebkitBackdropFilter: "blur(24px)",
             }}
           >
-            {/* Animated content wrapper */}
             <div
               style={{
                 opacity: visible ? 1 : 0,
@@ -238,10 +231,9 @@ export function Hero() {
                 transition: "opacity 0.35s ease, transform 0.35s ease",
               }}
             >
-              {/* Grade ring — SVG for smooth score arc */}
+              {/* Grade ring */}
               <div className="flex flex-col items-center gap-3">
                 <div className="relative" style={{ width: RING_SIZE, height: RING_SIZE }}>
-                  {/* Glow */}
                   <div
                     className="pointer-events-none absolute inset-0 rounded-full"
                     style={{
@@ -269,12 +261,8 @@ export function Hero() {
                       style={{ transition: "stroke-dashoffset 0.7s ease, stroke 0.5s ease" }}
                     />
                   </svg>
-                  {/* Grade letter */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span
-                      className="text-4xl font-black text-white"
-                      style={{ transition: "color 0.4s ease" }}
-                    >
+                    <span className="text-4xl font-black text-white" style={{ transition: "color 0.4s ease" }}>
                       {ex.grade}
                     </span>
                   </div>
@@ -291,7 +279,7 @@ export function Hero() {
                 >
                   {ex.label}
                 </span>
-                <p className="font-mono text-xs text-zinc-500">{ex.domain}</p>
+                <p className="font-mono text-xs text-slate-500">{ex.domain}</p>
               </div>
 
               {/* Finding chips */}
@@ -326,7 +314,7 @@ export function Hero() {
                       className="absolute inset-y-0 left-0 w-[2.5px] rounded-r-[2px]"
                       style={{ background: accent }}
                     />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">{label}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">{label}</p>
                     <p className="mt-1.5 text-2xl font-black text-white">{value}</p>
                   </div>
                 ))}
@@ -354,7 +342,7 @@ export function Hero() {
             />
           ))}
         </div>
-        <p className="mt-3 text-center text-[11px] text-zinc-600">
+        <p className="mt-3 text-center text-[11px] text-slate-600">
           Example scans — try any domain above
         </p>
       </div>
