@@ -147,7 +147,7 @@ export function Hero() {
         }}
       >
         <Sparkles className="h-3.5 w-3.5 text-[#d89a63]" />
-        Security posture intelligence
+        Posture intelligence
       </div>
 
       {/* Headline */}
