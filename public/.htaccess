@@ -1,0 +1,11 @@
+Options -MultiViews
+RewriteEngine On
+RewriteBase /
+
+# Serve privacy.html cleanly at /privacy
+RewriteRule ^privacy$ /privacy.html [L]
+
+# SPA fallback — everything else goes to index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
