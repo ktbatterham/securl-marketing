@@ -1,5 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { AppStoreBadge } from "./AppStoreBadge";
 
 /* ── Example scan data ─────────────────────────────────────────────────── */
 const EXAMPLES = [
@@ -204,6 +205,12 @@ export function Hero() {
         <a href="#compare" className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-300">
           See how it compares →
         </a>
+      </div>
+
+      {/* Secondary CTA — iOS app */}
+      <div className="mt-8 flex flex-col items-center gap-2.5">
+        <span className="text-xs text-slate-600">Prefer your phone? Track posture on the go.</span>
+        <AppStoreBadge />
       </div>
 
       {/* ── Rotating grade preview card ──────────────────────────────────── */}
