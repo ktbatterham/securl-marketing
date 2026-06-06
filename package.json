@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "snapshot:hero": "node scripts/snapshotHeroExamples.mjs",
     "deploy:hostinger": "node scripts/deployHostinger.mjs",
     "deploy:hostinger:live": "node scripts/deployHostinger.mjs --live"
   },
