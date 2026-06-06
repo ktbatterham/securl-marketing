@@ -1,106 +1,61 @@
 import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { AppStoreBadge } from "./AppStoreBadge";
+import { HERO_EXAMPLES, type HeroExampleChip } from "../data/heroExamples";
 
-/* ── Example scan data ─────────────────────────────────────────────────── */
-const EXAMPLES = [
-  {
-    domain: "github.com",
-    grade: "A",
-    score: 91,
-    label: "Excellent posture",
-    gradeColor: "#22c55e",
-    glowColor: "rgba(34,197,94,0.22)",
-    borderColor: "rgba(34,197,94,0.40)",
-    shadowRing: "0 0 0 6px rgba(34,197,94,0.07), 0 0 40px rgba(34,197,94,0.22)",
-    labelColor: "#4ade80",
-    labelBg: "rgba(34,197,94,0.10)",
-    labelBorder: "rgba(34,197,94,0.25)",
-    critical: 0,
-    warning: 1,
-    signals: 18,
-    chips: [
-      { label: "HSTS preloaded", color: "emerald" },
-      { label: "DNSSEC enabled", color: "emerald" },
-      { label: "Strong CSP", color: "emerald" },
-    ],
+/* ── Grade → card palette ──────────────────────────────────────────────────
+   The example data (src/data/heroExamples.ts) carries only real, snapshotted
+   facts — grade, score, finding counts. All card styling is derived from the
+   grade here, so refreshing the snapshot never touches colours.            */
+type GradePalette = {
+  gradeColor: string;
+  glowColor: string;
+  borderColor: string;
+  labelColor: string;
+  labelBg: string;
+  labelBorder: string;
+};
+
+const GRADE_PALETTE: Record<string, GradePalette> = {
+  A: {
+    gradeColor: "#22c55e", glowColor: "rgba(34,197,94,0.22)", borderColor: "rgba(34,197,94,0.40)",
+    labelColor: "#4ade80", labelBg: "rgba(34,197,94,0.10)", labelBorder: "rgba(34,197,94,0.25)",
   },
-  {
-    domain: "portswigger.net",
-    grade: "B",
-    score: 74,
-    label: "Good posture",
-    gradeColor: "#3b82f6",
-    glowColor: "rgba(59,130,246,0.25)",
-    borderColor: "rgba(59,130,246,0.45)",
-    shadowRing: "0 0 0 6px rgba(59,130,246,0.08), 0 0 40px rgba(59,130,246,0.25)",
-    labelColor: "#93c5fd",
-    labelBg: "rgba(59,130,246,0.10)",
-    labelBorder: "rgba(59,130,246,0.25)",
-    critical: 0,
-    warning: 3,
-    signals: 14,
-    chips: [
-      { label: "COOP missing", color: "amber" },
-      { label: "DNSSEC off", color: "amber" },
-      { label: "security.txt", color: "zinc" },
-    ],
+  B: {
+    gradeColor: "#3b82f6", glowColor: "rgba(59,130,246,0.25)", borderColor: "rgba(59,130,246,0.45)",
+    labelColor: "#93c5fd", labelBg: "rgba(59,130,246,0.10)", labelBorder: "rgba(59,130,246,0.25)",
   },
-  {
-    domain: "stackoverflow.com",
-    grade: "C",
-    score: 55,
-    label: "Mixed posture",
-    gradeColor: "#f59e0b",
-    glowColor: "rgba(245,158,11,0.22)",
-    borderColor: "rgba(245,158,11,0.40)",
-    shadowRing: "0 0 0 6px rgba(245,158,11,0.06), 0 0 40px rgba(245,158,11,0.20)",
-    labelColor: "#fcd34d",
-    labelBg: "rgba(245,158,11,0.10)",
-    labelBorder: "rgba(245,158,11,0.25)",
-    critical: 0,
-    warning: 5,
-    signals: 11,
-    chips: [
-      { label: "No DMARC policy", color: "amber" },
-      { label: "Server exposed", color: "amber" },
-      { label: "No CAA records", color: "zinc" },
-    ],
+  C: {
+    gradeColor: "#f59e0b", glowColor: "rgba(245,158,11,0.22)", borderColor: "rgba(245,158,11,0.40)",
+    labelColor: "#fcd34d", labelBg: "rgba(245,158,11,0.10)", labelBorder: "rgba(245,158,11,0.25)",
   },
-  {
-    domain: "httpbin.org",
-    grade: "D",
-    score: 31,
-    label: "Needs attention",
-    gradeColor: "#f97316",
-    glowColor: "rgba(249,115,22,0.22)",
-    borderColor: "rgba(249,115,22,0.40)",
-    shadowRing: "0 0 0 6px rgba(249,115,22,0.06), 0 0 40px rgba(249,115,22,0.20)",
-    labelColor: "#fb923c",
-    labelBg: "rgba(249,115,22,0.10)",
-    labelBorder: "rgba(249,115,22,0.25)",
-    critical: 2,
-    warning: 4,
-    signals: 7,
-    chips: [
-      { label: "No HSTS", color: "red" },
-      { label: "No CSP", color: "red" },
-      { label: "Open CORS", color: "amber" },
-    ],
+  D: {
+    gradeColor: "#f97316", glowColor: "rgba(249,115,22,0.22)", borderColor: "rgba(249,115,22,0.40)",
+    labelColor: "#fb923c", labelBg: "rgba(249,115,22,0.10)", labelBorder: "rgba(249,115,22,0.25)",
   },
-];
+  F: {
+    gradeColor: "#ef4444", glowColor: "rgba(239,68,68,0.22)", borderColor: "rgba(239,68,68,0.40)",
+    labelColor: "#f87171", labelBg: "rgba(239,68,68,0.10)", labelBorder: "rgba(239,68,68,0.25)",
+  },
+  U: {
+    gradeColor: "#94a3b8", glowColor: "rgba(148,163,184,0.18)", borderColor: "rgba(148,163,184,0.35)",
+    labelColor: "#cbd5e1", labelBg: "rgba(148,163,184,0.10)", labelBorder: "rgba(148,163,184,0.25)",
+  },
+};
+
+function paletteFor(grade: string): GradePalette {
+  return GRADE_PALETTE[(grade[0] ?? "U").toUpperCase()] ?? GRADE_PALETTE.U;
+}
 
 const RING_R = 52;
 const RING_SIZE = 120;
 const RING_CIRC = parseFloat((2 * Math.PI * RING_R).toFixed(2));
 
-function chipStyle(color: string) {
-  if (color === "emerald")
-    return { color: "#4ade80", background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)" };
-  if (color === "amber")
-    return { color: "#fcd34d", background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" };
-  if (color === "red")
+function chipStyle(sev: HeroExampleChip["sev"]) {
+  if (sev === "critical")
     return { color: "#f87171", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)" };
+  if (sev === "warning")
+    return { color: "#fcd34d", background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.25)" };
   return { color: "#94a3b8", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" };
 }
 
@@ -113,7 +68,7 @@ export function Hero() {
     const rotate = () => {
       setVisible(false);
       timerRef.current = setTimeout(() => {
-        setIdx((i) => (i + 1) % EXAMPLES.length);
+        setIdx((i) => (i + 1) % HERO_EXAMPLES.length);
         setVisible(true);
       }, 380);
     };
@@ -124,7 +79,8 @@ export function Hero() {
     };
   }, []);
 
-  const ex = EXAMPLES[idx];
+  const ex = HERO_EXAMPLES[idx];
+  const pal = paletteFor(ex.grade);
   const offset = parseFloat((RING_CIRC * (1 - ex.score / 100)).toFixed(2));
 
   function handleScan(e: React.FormEvent<HTMLFormElement>) {
@@ -218,8 +174,8 @@ export function Hero() {
         <div
           className="relative rounded-[2rem] p-px"
           style={{
-            background: `linear-gradient(135deg, ${ex.borderColor} 0%, rgba(181,106,44,0.12) 50%, rgba(122,166,182,0.10) 100%)`,
-            boxShadow: `0 0 80px ${ex.glowColor}, 0 40px 96px rgba(0,0,0,0.6)`,
+            background: `linear-gradient(135deg, ${pal.borderColor} 0%, rgba(181,106,44,0.12) 50%, rgba(122,166,182,0.10) 100%)`,
+            boxShadow: `0 0 80px ${pal.glowColor}, 0 40px 96px rgba(0,0,0,0.6)`,
             transition: "background 0.6s ease, box-shadow 0.6s ease",
           }}
         >
@@ -244,7 +200,7 @@ export function Hero() {
                   <div
                     className="pointer-events-none absolute inset-0 rounded-full"
                     style={{
-                      background: `radial-gradient(circle, ${ex.glowColor} 0%, transparent 70%)`,
+                      background: `radial-gradient(circle, ${pal.glowColor} 0%, transparent 70%)`,
                       filter: "blur(16px)",
                     }}
                   />
@@ -260,11 +216,11 @@ export function Hero() {
                     />
                     <circle
                       cx={RING_SIZE / 2} cy={RING_SIZE / 2} r={RING_R}
-                      fill="none" stroke={ex.gradeColor} strokeWidth="8"
+                      fill="none" stroke={pal.gradeColor} strokeWidth="8"
                       strokeLinecap="round"
                       strokeDasharray={RING_CIRC}
                       strokeDashoffset={offset}
-                      filter={`drop-shadow(0 0 5px ${ex.gradeColor}aa)`}
+                      filter={`drop-shadow(0 0 5px ${pal.gradeColor}aa)`}
                       style={{ transition: "stroke-dashoffset 0.7s ease, stroke 0.5s ease" }}
                     />
                   </svg>
@@ -278,9 +234,9 @@ export function Hero() {
                 <span
                   className="rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
                   style={{
-                    color: ex.labelColor,
-                    background: ex.labelBg,
-                    border: `1px solid ${ex.labelBorder}`,
+                    color: pal.labelColor,
+                    background: pal.labelBg,
+                    border: `1px solid ${pal.labelBorder}`,
                     transition: "color 0.4s ease, background 0.4s ease, border-color 0.4s ease",
                   }}
                 >
@@ -291,11 +247,11 @@ export function Hero() {
 
               {/* Finding chips */}
               <div className="mt-6 flex flex-wrap justify-center gap-2">
-                {ex.chips.map(({ label, color }) => (
+                {ex.chips.map(({ label, sev }) => (
                   <span
                     key={label}
                     className="rounded-full border px-3 py-1 text-[11px] font-semibold"
-                    style={chipStyle(color)}
+                    style={chipStyle(sev)}
                   >
                     {label}
                   </span>
@@ -310,7 +266,7 @@ export function Hero() {
                 {[
                   { label: "Critical", value: ex.critical, accent: "rgba(244,63,94,0.6)" },
                   { label: "Warning",  value: ex.warning,  accent: "rgba(245,158,11,0.6)" },
-                  { label: "Signals",  value: ex.signals,  accent: ex.gradeColor },
+                  { label: "Info",     value: ex.info,     accent: pal.gradeColor },
                 ].map(({ label, value, accent }) => (
                   <div
                     key={label}
@@ -332,9 +288,9 @@ export function Hero() {
 
         {/* Rotation dots */}
         <div className="mt-5 flex items-center justify-center gap-2">
-          {EXAMPLES.map((_, i) => (
+          {HERO_EXAMPLES.map((example, i) => (
             <button
-              key={i}
+              key={example.domain}
               onClick={() => {
                 setVisible(false);
                 setTimeout(() => { setIdx(i); setVisible(true); }, 380);
@@ -343,14 +299,14 @@ export function Hero() {
               style={{
                 width: i === idx ? 20 : 6,
                 height: 6,
-                background: i === idx ? ex.gradeColor : "rgba(255,255,255,0.15)",
+                background: i === idx ? pal.gradeColor : "rgba(255,255,255,0.15)",
               }}
-              aria-label={`View ${EXAMPLES[i].domain} example`}
+              aria-label={`View ${example.domain} example`}
             />
           ))}
         </div>
         <p className="mt-3 text-center text-[11px] text-slate-600">
-          Example scans — try any domain above
+          Real scans of well-known sites — even the giants have gaps. Try yours above.
         </p>
       </div>
     </section>
