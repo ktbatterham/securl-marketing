@@ -50,6 +50,33 @@ function paletteFor(grade: string): GradePalette {
 const RING_R = 52;
 const RING_SIZE = 120;
 const RING_CIRC = parseFloat((2 * Math.PI * RING_R).toFixed(2));
+const SECURL_API_BASE_URL = "https://securl-app-production.up.railway.app";
+
+function recordHandoffStarted(target: string) {
+  const payload = JSON.stringify({
+    event: "handoff_started",
+    target,
+    referrer: typeof document !== "undefined" ? document.referrer : "",
+    currentUrl: typeof window !== "undefined" ? window.location.href : "",
+  });
+  const url = `${SECURL_API_BASE_URL}/api/telemetry/event`;
+
+  if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+    navigator.sendBeacon(url, new Blob([payload], { type: "application/json" }));
+    return;
+  }
+
+  void fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: payload,
+    keepalive: true,
+  }).catch(() => {
+    // Telemetry should never block the handoff into the app.
+  });
+}
 
 function chipStyle(sev: HeroExampleChip["sev"]) {
   if (sev === "critical")
@@ -88,6 +115,7 @@ export function Hero() {
     const input = (e.currentTarget.elements.namedItem("url") as HTMLInputElement).value.trim();
     if (!input) return;
     const target = input.startsWith("http") ? input : `https://${input}`;
+    recordHandoffStarted(target);
     window.open(`https://app.securl.online?target=${encodeURIComponent(target)}`, "_blank");
   }
 
