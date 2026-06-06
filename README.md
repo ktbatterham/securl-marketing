@@ -30,7 +30,27 @@ Outputs to `dist/`. This is a pure static site — no backend, no API calls.
 
 ## Deploy
 
-The `dist/` folder is deployed to Hostinger manually (zip and upload). There is no automated deploy workflow.
+Hostinger SSH deploy is available and defaults to a dry-run:
+
+```sh
+npm run deploy:hostinger
+```
+
+If the dry-run looks right, deploy live:
+
+```sh
+npm run deploy:hostinger:live
+```
+
+The live command builds `dist/`, creates a timestamped remote backup under `/home/u765511792/deploy-backups/`, syncs `dist/` to `/home/u765511792/domains/securl.online/public_html/`, and smoke-checks `https://securl.online`.
+
+Useful options:
+
+```sh
+npm run deploy:hostinger -- --skip-build
+npm run deploy:hostinger -- --live --skip-smoke
+npm run deploy:hostinger -- --help
+```
 
 ## Structure
 
