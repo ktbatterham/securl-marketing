@@ -4,9 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy — SecURL</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background: #070b14; }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #070b14;
+      color: #cbd5e1;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page { width: min(100% - 3rem, 42rem); margin: 0 auto; padding: 4rem 0 6rem; }
+    a { color: #cbd5e1; text-decoration-color: rgba(203,213,225,0.45); text-underline-offset: 0.2em; }
+    a:hover { color: #fff; }
+    .back { display: inline-flex; margin-bottom: 2.5rem; color: #64748b; font-size: 0.875rem; text-decoration: none; }
+    h1 { margin: 0; color: #fff; font-size: 1.5rem; line-height: 2rem; font-weight: 650; letter-spacing: -0.01em; }
+    h2 { margin: 0 0 0.75rem; color: #fff; font-size: 1rem; line-height: 1.5rem; font-weight: 550; }
+    p { margin: 0; color: #cbd5e1; font-size: 0.875rem; line-height: 1.75; }
+    p + p { margin-top: 1rem; }
+    section + section { margin-top: 2rem; }
+    .updated { margin-top: 0.25rem; color: #64748b; font-size: 0.875rem; }
+    .intro { margin-bottom: 2.5rem; }
+    .footer { margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; color: #475569; font-size: 0.875rem; }
+    .footer a { color: #64748b; text-decoration: none; }
+    .footer a:hover { color: #cbd5e1; }
+    .footer span { margin: 0 0.75rem; }
     .text-gradient-brand {
       background: linear-gradient(135deg, #b56a2c, #d89a63);
       -webkit-background-clip: text;
@@ -15,64 +36,67 @@
     }
   </style>
 </head>
-<body class="min-h-screen text-slate-300">
-  <div class="mx-auto max-w-2xl px-6 py-16 sm:py-24">
+<body>
+  <main class="page">
 
-    <a href="/" class="mb-10 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-slate-300">
+    <a href="/" class="back">
       ← securl.online
     </a>
 
-    <div class="mb-10">
-      <h1 class="text-2xl font-semibold tracking-tight text-white">Privacy Policy</h1>
-      <p class="mt-1 text-sm text-slate-500">Last updated: May 2026</p>
+    <div class="intro">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: June 2026</p>
     </div>
 
-    <div class="space-y-8 text-sm leading-7">
+    <div>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">What SecURL does</h2>
-        <p>SecURL analyses the external security posture of websites and web services. You provide a URL, our service checks it using publicly observable signals — HTTP response headers, TLS configuration, DNS records, certificate metadata, and related data — and returns a score and grade. No credentials, no login, and no access to anything that isn't already visible from the public internet.</p>
+        <h2>What SecURL does</h2>
+        <p>SecURL analyses the external security posture of websites and web services. You provide a URL, our service checks it using publicly observable signals — HTTP response headers, TLS configuration, DNS records, certificate metadata, and related data — and returns a score and grade. No target credentials and no special access are required; SecURL only analyses information visible from the public internet.</p>
       </section>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">Data we process</h2>
-        <p>When you scan a URL, that URL is sent to our servers to perform the analysis. We do not store URLs or scan results against any personal identity. Scan results returned to the app are stored locally on your device only and are not transmitted back to us.</p>
-        <p class="mt-4">To allow you to retrieve your own scans and prevent abuse, each installation of the app generates an anonymous random identifier. This identifier is stored on your device and sent with scan requests. It contains no personal information and cannot be linked to you.</p>
+        <h2>Data we process</h2>
+        <p>When you scan a URL, that URL is sent to our servers to perform the analysis. We store scan records, monitored targets, scan status, summary data, and the resulting report so you can reopen history, compare changes, and use monitoring across the web app, API, and companion apps.</p>
+        <p>To allow you to retrieve your own scans and prevent abuse, each installation of the app generates a random scan-owner token. The token is stored on your device and sent with scan requests. On our servers it is stored as a salted fingerprint rather than the original token.</p>
+        <p>If you create an account, we collect your email address, optional display name, password hash, session records, API key fingerprints, saved scans, and monitored targets. API keys and sessions are stored as one-way fingerprints; the original secret is only shown to you when it is created.</p>
+        <p>We also collect minimal operational telemetry such as page-load counts, traffic source categories, funnel events, scan timing, failure classes, and rate-limit counters. We hash or truncate identifiers used for abuse prevention and avoid storing full target paths or query strings in telemetry.</p>
       </section>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">Data we do not collect</h2>
-        <p>We do not collect your name, email address, location, device identifiers, or any other personal information. We do not require an account. We do not use advertising or tracking SDKs. We do not sell, share, or transfer any data to third parties for marketing purposes.</p>
+        <h2>What we do not collect</h2>
+        <p>We do not collect credentials for the sites you scan. We do not require an account for basic scanning. We do not use advertising SDKs, sell personal data, or share data with third parties for marketing purposes.</p>
       </section>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">Infrastructure</h2>
-        <p>The SecURL backend runs on Railway. Standard server logs may capture IP addresses and request metadata for a limited period for operational purposes such as debugging and abuse prevention. These logs are not used for profiling and are not retained long-term.</p>
+        <h2>Infrastructure</h2>
+        <p>The SecURL backend runs on Railway with durable storage for account-backed scans and monitoring. Static web pages are hosted separately. Operational logs may include request metadata, hashed client identifiers, target origins, and failure details for debugging, reliability, and abuse prevention. These logs are not used for advertising or profiling.</p>
       </section>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">Your data on device</h2>
-        <p>Scan history, monitored targets, and your anonymous scan token are stored locally on your device using standard app storage. This data never leaves your device except as described above. Uninstalling the app removes all locally stored data.</p>
+        <h2>Your data and sharing</h2>
+        <p>Anonymous scan-owner tokens are stored locally in your browser or app. Browser account sessions are stored in session storage and are cleared when you sign out or the session expires. Companion apps may keep local scan history for offline access.</p>
+        <p>If you copy or open a shared report link, the completed scan can be viewed by anyone who has that link. Shared report links do not require an account.</p>
       </section>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">Changes to this policy</h2>
+        <h2>Changes to this policy</h2>
         <p>If we make material changes to how we handle data, we will update this page and revise the date at the top. Continued use of SecURL after changes are posted means you accept the updated policy.</p>
       </section>
 
       <section>
-        <h2 class="mb-3 text-base font-medium text-white">Contact</h2>
-        <p>Questions about this policy or your data can be sent to <a href="mailto:hello@securl.online" class="text-slate-400 underline underline-offset-2 hover:text-white">hello@securl.online</a>.</p>
+        <h2>Contact</h2>
+        <p>Questions about this policy or your data can be sent to <a href="mailto:hello@securl.online">hello@securl.online</a>.</p>
       </section>
 
     </div>
 
-    <div class="mt-16 border-t pt-8 text-sm text-slate-600" style="border-color: rgba(255,255,255,0.06)">
-      <a href="/" class="hover:text-slate-300 transition-colors">Sec<span class="text-gradient-brand">URL</span></a>
-      <span class="mx-3">·</span>
-      <a href="https://app.securl.online" class="hover:text-slate-300 transition-colors">Open app ↗</a>
-    </div>
+    <footer class="footer">
+      <a href="/">Sec<span class="text-gradient-brand">URL</span></a>
+      <span>·</span>
+      <a href="https://app.securl.online">Open app ↗</a>
+    </footer>
 
-  </div>
+  </main>
 </body>
 </html>
