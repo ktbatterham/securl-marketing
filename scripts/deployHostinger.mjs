@@ -8,7 +8,7 @@ const config = {
   buildScripts: [["npm", ["run", "build"]]],
   distDir: resolve(process.cwd(), "dist"),
   requiredFiles: ["index.html", ".htaccess"],
-  preservePatterns: ["google*.html", ".well-known/acme-challenge/***"],
+  preservePatterns: ["google*.html", ".well-known/acme-challenge/***", "downloads/***"],
   sshHost: process.env.HOSTINGER_SSH_HOST || "141.136.43.111",
   sshPort: process.env.HOSTINGER_SSH_PORT || "65002",
   sshUser: process.env.HOSTINGER_SSH_USER || "u765511792",
