@@ -6,7 +6,8 @@ const rows = [
   { label: "Third-party surface mapping",                  securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Passive intelligence (tech stack, AI surface, exposure)", securl: true, secheaders: false, observatory: false, sslabs: false },
   { label: "Session replay & analytics vendor detection (30+ tools)", securl: true, secheaders: false, observatory: false, sslabs: false },
-  { label: "Prioritised, ranked findings",                 securl: true,  secheaders: false, observatory: false, sslabs: false },
+  { label: "Finding evidence with observed and expected values", securl: true, secheaders: false, observatory: false, sslabs: false },
+  { label: "Prioritized remediation plan with owner, effort, and verification", securl: true, secheaders: false, observatory: false, sslabs: false },
   { label: "OWASP / MITRE mapping",                        securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Monitoring over time",                         securl: true,  secheaders: false, observatory: false, sslabs: false },
   { label: "Executive-ready PDF export",                   securl: true,  secheaders: false, observatory: false, sslabs: false },
@@ -60,7 +61,7 @@ export function CompareTable() {
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-400">
           securityheaders.com, Mozilla Observatory, and SSL Labs are excellent — each covers one slice.
-          SecURL reads the whole picture in one pass.
+          SecURL reads the whole picture in one pass, then turns the evidence into actions.
         </p>
       </div>
 
@@ -119,7 +120,7 @@ export function CompareTable() {
             style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" }}
           >
             <p className="text-sm text-slate-400">
-              One URL. One grade. Public-response checks plus passive intelligence — everything ranked by what to fix first.{" "}
+              One URL. One grade. Public-response checks plus passive intelligence, evidence, and a remediation plan ranked by what to fix first.{" "}
               <a
                 href="https://app.securl.online"
                 target="_blank"

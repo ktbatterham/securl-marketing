@@ -19,8 +19,8 @@ const features = [
   },
   {
     Icon: ListTodo,
-    title: "Ranked findings",
-    body: "Critical issues surface first. Every finding maps to OWASP and MITRE ATT&CK so your team speaks the same language as auditors.",
+    title: "Evidence-backed fixes",
+    body: "Findings carry observed evidence, expected posture, and references, then roll into a remediation plan ranked by impact and effort.",
     accent: "rgba(181,106,44,0.12)",
     iconColor: "#d89a63",
   },
@@ -47,8 +47,8 @@ const features = [
   },
   {
     Icon: AlertTriangle,
-    title: "Prioritised actions",
-    body: "Not a raw list. Findings are ordered by impact so you know exactly what to fix first — and why.",
+    title: "Owner-aware actions",
+    body: "Not a raw list. Each action points at the likely owner — app, edge, DNS, identity, or third party — with a plain verification step.",
     accent: "rgba(181,106,44,0.12)",
     iconColor: "#d89a63",
   },
@@ -80,7 +80,7 @@ export function FeatureGrid() {
           <span className="text-gradient-brand">The full picture.</span>
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-400">
-          Eight signal categories. One posture read. Including passive intelligence — signals derived from observation alone, with no active probing.
+          Eight signal categories. One posture read. Including passive intelligence, evidence snapshots, and remediation guidance derived from observation alone.
         </p>
       </div>
 
