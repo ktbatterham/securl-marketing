@@ -144,9 +144,9 @@ export function Hero() {
 
       {/* Sub */}
       <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl">
-        Paste a URL. Get a graded read of your site's entire external security posture — headers,
-        DNS trust, TLS, third-party surface, and public disclosure signals, all{" "}
-        <span className="font-semibold text-slate-200">ranked by what to fix first.</span>
+        Paste a URL. Get a graded read of your site's external security posture — headers,
+        DNS trust, TLS, third-party surface, and public disclosure signals, with{" "}
+        <span className="font-semibold text-slate-200">evidence-backed fixes ranked by impact.</span>
       </p>
 
       {/* URL scan input */}

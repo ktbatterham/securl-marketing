@@ -12,12 +12,12 @@ const steps = [
   {
     num: "03",
     title: "Get your verdict",
-    body: "An A–F grade with every finding ranked by severity — OWASP and MITRE references included.",
+    body: "An A–F grade with score drivers, evidence, severity, and OWASP or MITRE references where they help.",
   },
   {
     num: "04",
     title: "Act on it",
-    body: "Prioritised action list, PDF export for stakeholders, and monitoring to catch regressions after future deploys.",
+    body: "A prioritized remediation plan with impact, effort, likely owner, verification steps, PDF export, and monitoring for future regressions.",
   },
 ];
 
