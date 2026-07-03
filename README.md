@@ -3,7 +3,8 @@
 Marketing site for [securl.online](https://securl.online) — the public landing page for the SecURL security posture product.
 
 Live site: [securl.online](https://securl.online)  
-App: [app.securl.online](https://app.securl.online)
+App: [app.securl.online](https://app.securl.online)  
+Android downloads: [securl.online/downloads](https://securl.online/downloads)
 
 ## Stack
 
@@ -62,10 +63,10 @@ src/
     FeatureGrid.tsx  — eight-feature capability grid
     CompareTable.tsx — comparison table (SecURL vs alternatives)
     HowItWorks.tsx   — three-step explainer section
-    Footer.tsx       — footer with app link
+    Footer.tsx       — footer with app and mobile download links
   App.tsx            — page shell with animated gradient background
 ```
 
 ## Relationship to the app repo
 
-This site links to [app.securl.online](https://app.securl.online). It has no shared code with the app repo (`external-posture-insight`) — it is a standalone static marketing site.
+This site links to [app.securl.online](https://app.securl.online), the SecURL iOS app, and the self-hosted Android APKs at [securl.online/downloads](https://securl.online/downloads). It has no shared code with the app repo — it is a standalone static marketing site.

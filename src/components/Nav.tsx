@@ -24,6 +24,7 @@ export function Nav() {
           <a href="#features"     className="transition-colors hover:text-white">Features</a>
           <a href="#compare"      className="transition-colors hover:text-white">Compare</a>
           <a href="#how-it-works" className="transition-colors hover:text-white">How it works</a>
+          <a href="/downloads"    className="transition-colors hover:text-white">Android</a>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -76,6 +77,7 @@ export function Nav() {
             { href: "#features",     label: "Features" },
             { href: "#compare",      label: "Compare" },
             { href: "#how-it-works", label: "How it works" },
+            { href: "/downloads",    label: "Android downloads" },
           ].map(({ href, label }) => (
             <a
               key={href}
