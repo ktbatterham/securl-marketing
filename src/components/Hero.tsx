@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { AppStoreBadge } from "./AppStoreBadge";
+import { AndroidDownloadsBadge } from "./AndroidDownloadsBadge";
 import { HERO_EXAMPLES, type HeroExampleChip } from "../data/heroExamples";
 
 /* ── Grade → card palette ──────────────────────────────────────────────────
@@ -191,10 +192,13 @@ export function Hero() {
         </a>
       </div>
 
-      {/* Secondary CTA — iOS app */}
+      {/* Secondary CTA — mobile apps */}
       <div className="mt-8 flex flex-col items-center gap-2.5">
         <span className="text-xs text-slate-600">Prefer your phone? Track posture on the go.</span>
-        <AppStoreBadge />
+        <div className="flex flex-col items-center gap-3 sm:flex-row">
+          <AppStoreBadge />
+          <AndroidDownloadsBadge />
+        </div>
       </div>
 
       {/* ── Rotating grade preview card ──────────────────────────────────── */}
