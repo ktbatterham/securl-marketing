@@ -3,13 +3,20 @@
 
 const APP_STORE_URL = "https://apps.apple.com/app/securl/id6774322464";
 
-export function AppStoreBadge({ className = "" }: { className?: string }) {
+export function AppStoreBadge({
+  className = "",
+  onClick,
+}: {
+  className?: string;
+  onClick?: () => void;
+}) {
   return (
     <a
       href={APP_STORE_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Download SecURL on the App Store"
+      onClick={onClick}
       className={`inline-flex items-center gap-3 rounded-xl border border-white/15 bg-black px-4 py-2.5 transition-all duration-200 hover:border-white/30 hover:bg-[#0a0a0a] ${className}`}
     >
       <svg viewBox="0 0 384 512" className="h-7 w-7 shrink-0 fill-white" aria-hidden="true">

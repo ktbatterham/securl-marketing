@@ -21,6 +21,7 @@ export function Nav() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 text-sm font-medium text-slate-400 sm:flex">
+          <a href="#routes"       className="transition-colors hover:text-white">Apps</a>
           <a href="#features"     className="transition-colors hover:text-white">Features</a>
           <a href="#engine"       className="transition-colors hover:text-white">Engine</a>
           <a href="#compare"      className="transition-colors hover:text-white">Compare</a>
@@ -75,6 +76,7 @@ export function Nav() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
         >
           {[
+            { href: "#routes",       label: "Apps and downloads" },
             { href: "#features",     label: "Features" },
             { href: "#engine",       label: "Engine" },
             { href: "#compare",      label: "Compare" },

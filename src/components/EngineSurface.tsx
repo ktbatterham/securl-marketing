@@ -1,5 +1,6 @@
 import { Download, Layers3, Search, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { buildScannerUrl, recordFunnelHandoff } from "../lib/telemetry";
 
 type EngineLink = {
   Icon: LucideIcon;
@@ -78,9 +79,10 @@ export function EngineSurface() {
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href="https://app.securl.online"
+                  href={buildScannerUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => recordFunnelHandoff({ target: "https://app.securl.online", mode: "landing:engine_open_scanner", format: "web_app" })}
                   className="btn-glow inline-flex justify-center rounded-2xl px-6 py-3 text-sm font-bold text-white"
                   style={{ background: "#b56a2c" }}
                 >
@@ -90,6 +92,7 @@ export function EngineSurface() {
                   href="https://github.com/this-is-securl/securl"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => recordFunnelHandoff({ target: "https://github.com/this-is-securl/securl", mode: "landing:engine_source", format: "github" })}
                   className="inline-flex justify-center rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-3 text-sm font-bold text-slate-200 transition-colors hover:border-white/18 hover:bg-white/[0.07]"
                 >
                   View source
@@ -104,6 +107,7 @@ export function EngineSurface() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => recordFunnelHandoff({ target: href, mode: `landing:engine_${title.toLowerCase().replaceAll(" ", "_")}`, format: "engine_link" })}
                   className="group min-h-40 rounded-[1.35rem] border border-white/[0.08] bg-white/[0.035] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#b56a2c]/35 hover:bg-[#b56a2c]/[0.08]"
                 >
                   <div

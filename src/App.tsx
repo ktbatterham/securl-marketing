@@ -5,8 +5,15 @@ import { EngineSurface } from "./components/EngineSurface";
 import { CompareTable } from "./components/CompareTable";
 import { HowItWorks } from "./components/HowItWorks";
 import { Footer } from "./components/Footer";
+import { FunnelRoutes } from "./components/FunnelRoutes";
+import { recordPageLoad } from "./lib/telemetry";
+import { useEffect } from "react";
 
 export default function App() {
+  useEffect(() => {
+    recordPageLoad();
+  }, []);
+
   return (
     <div className="noise relative min-h-screen overflow-x-hidden">
       {/* Background — static radial wash matching the app palette */}
@@ -24,6 +31,7 @@ export default function App() {
       <div className="relative z-10">
         <Nav />
         <Hero />
+        <FunnelRoutes />
         <FeatureGrid />
         <EngineSurface />
         <CompareTable />

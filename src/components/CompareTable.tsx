@@ -1,3 +1,5 @@
+import { buildScannerUrl, recordFunnelHandoff } from "../lib/telemetry";
+
 const rows = [
   { label: "HTTP security headers",                        securl: true,  secheaders: true,  observatory: true,  sslabs: false },
   { label: "TLS / SSL configuration",                      securl: true,  secheaders: false, observatory: true,  sslabs: true  },
@@ -122,9 +124,10 @@ export function CompareTable() {
             <p className="text-sm text-slate-400">
               One URL. One grade. Public-response checks plus passive intelligence, evidence, and a remediation plan ranked by what to fix first.{" "}
               <a
-                href="https://app.securl.online"
+                href={buildScannerUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => recordFunnelHandoff({ target: "https://app.securl.online", mode: "landing:compare_cta", format: "web_app" })}
                 className="font-bold text-[#d89a63] transition-colors hover:text-[#f0d5bc]"
               >
                 Try it free →

@@ -2,13 +2,20 @@ import { Download, Smartphone } from "lucide-react";
 
 const ANDROID_DOWNLOADS_URL = "https://securl.online/downloads";
 
-export function AndroidDownloadsBadge({ className = "" }: { className?: string }) {
+export function AndroidDownloadsBadge({
+  className = "",
+  onClick,
+}: {
+  className?: string;
+  onClick?: () => void;
+}) {
   return (
     <a
       href={ANDROID_DOWNLOADS_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Download SecURL Android APKs"
+      onClick={onClick}
       className={`inline-flex items-center gap-3 rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-4 py-2.5 text-emerald-50 transition-all duration-200 hover:border-emerald-200/35 hover:bg-emerald-400/15 ${className}`}
     >
       <span className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-300/15 text-emerald-200">

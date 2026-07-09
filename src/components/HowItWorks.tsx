@@ -1,3 +1,5 @@
+import { buildScannerUrl, recordFunnelHandoff } from "../lib/telemetry";
+
 const steps = [
   {
     num: "01",
@@ -103,9 +105,10 @@ export function HowItWorks() {
             Free, instant, no account required.
           </p>
           <a
-            href="https://app.securl.online"
+            href={buildScannerUrl()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => recordFunnelHandoff({ target: "https://app.securl.online", mode: "landing:final_cta", format: "web_app" })}
             className="btn-glow relative mt-10 inline-block rounded-2xl px-12 py-4 text-base font-bold text-white"
             style={{ background: "#b56a2c" }}
           >

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppStoreBadge } from "./AppStoreBadge";
 import { AndroidDownloadsBadge } from "./AndroidDownloadsBadge";
 import { HERO_EXAMPLES, type HeroExampleChip } from "../data/heroExamples";
+import { buildScannerUrl, recordFunnelHandoff } from "../lib/telemetry";
 
 /* ── Grade → card palette ──────────────────────────────────────────────────
    The example data (src/data/heroExamples.ts) carries only real, snapshotted
@@ -51,33 +52,6 @@ function paletteFor(grade: string): GradePalette {
 const RING_R = 52;
 const RING_SIZE = 120;
 const RING_CIRC = parseFloat((2 * Math.PI * RING_R).toFixed(2));
-const SECURL_API_BASE_URL = "https://securl-app-production.up.railway.app";
-
-function recordHandoffStarted(target: string) {
-  const payload = JSON.stringify({
-    event: "handoff_started",
-    target,
-    referrer: typeof document !== "undefined" ? document.referrer : "",
-    currentUrl: typeof window !== "undefined" ? window.location.href : "",
-  });
-  const url = `${SECURL_API_BASE_URL}/api/telemetry/event`;
-
-  if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
-    navigator.sendBeacon(url, new Blob([payload], { type: "application/json" }));
-    return;
-  }
-
-  void fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: payload,
-    keepalive: true,
-  }).catch(() => {
-    // Telemetry should never block the handoff into the app.
-  });
-}
 
 function chipStyle(sev: HeroExampleChip["sev"]) {
   if (sev === "critical")
@@ -116,8 +90,8 @@ export function Hero() {
     const input = (e.currentTarget.elements.namedItem("url") as HTMLInputElement).value.trim();
     if (!input) return;
     const target = input.startsWith("http") ? input : `https://${input}`;
-    recordHandoffStarted(target);
-    window.open(`https://app.securl.online?target=${encodeURIComponent(target)}`, "_blank");
+    recordFunnelHandoff({ target, mode: "landing:hero_scan", format: "web_scan" });
+    window.open(buildScannerUrl(target), "_blank");
   }
 
   return (
@@ -196,8 +170,8 @@ export function Hero() {
       <div className="mt-8 flex flex-col items-center gap-2.5">
         <span className="text-xs text-slate-600">Prefer your phone? Track posture on the go.</span>
         <div className="flex flex-col items-center gap-3 sm:flex-row">
-          <AppStoreBadge />
-          <AndroidDownloadsBadge />
+          <AppStoreBadge onClick={() => recordFunnelHandoff({ target: "https://apps.apple.com/app/securl/id6774322464", mode: "landing:ios_badge", format: "app_store" })} />
+          <AndroidDownloadsBadge onClick={() => recordFunnelHandoff({ target: "https://securl.online/downloads", mode: "landing:android_badge", format: "android_apk" })} />
         </div>
       </div>
 
