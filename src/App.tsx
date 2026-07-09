@@ -1,6 +1,7 @@
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { FeatureGrid } from "./components/FeatureGrid";
+import { EngineSurface } from "./components/EngineSurface";
 import { CompareTable } from "./components/CompareTable";
 import { HowItWorks } from "./components/HowItWorks";
 import { Footer } from "./components/Footer";
@@ -24,6 +25,7 @@ export default function App() {
         <Nav />
         <Hero />
         <FeatureGrid />
+        <EngineSurface />
         <CompareTable />
         <HowItWorks />
         <Footer />

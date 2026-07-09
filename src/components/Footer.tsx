@@ -22,9 +22,12 @@ export function Footer() {
 
           <nav className="flex flex-wrap justify-center gap-6 text-sm text-slate-600">
             <a href="#features"     className="transition-colors hover:text-slate-300">Features</a>
+            <a href="#engine"       className="transition-colors hover:text-slate-300">Engine</a>
             <a href="#compare"      className="transition-colors hover:text-slate-300">Compare</a>
             <a href="#how-it-works" className="transition-colors hover:text-slate-300">How it works</a>
             <a href="https://app.securl.online" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-slate-300">Open app ↗</a>
+            <a href="https://www.npmjs.com/package/securl" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-slate-300">npm ↗</a>
+            <a href="https://github.com/this-is-securl/securl" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-slate-300">Source ↗</a>
             <a href="https://apps.apple.com/app/securl/id6774322464" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-slate-300">iOS app ↗</a>
             <a href="/downloads" className="transition-colors hover:text-slate-300">Android APKs</a>
             <a href="/privacy" className="transition-colors hover:text-slate-300">Privacy</a>

@@ -22,6 +22,7 @@ export function Nav() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 text-sm font-medium text-slate-400 sm:flex">
           <a href="#features"     className="transition-colors hover:text-white">Features</a>
+          <a href="#engine"       className="transition-colors hover:text-white">Engine</a>
           <a href="#compare"      className="transition-colors hover:text-white">Compare</a>
           <a href="#how-it-works" className="transition-colors hover:text-white">How it works</a>
           <a href="/downloads"    className="transition-colors hover:text-white">Android</a>
@@ -75,6 +76,7 @@ export function Nav() {
         >
           {[
             { href: "#features",     label: "Features" },
+            { href: "#engine",       label: "Engine" },
             { href: "#compare",      label: "Compare" },
             { href: "#how-it-works", label: "How it works" },
             { href: "/downloads",    label: "Android downloads" },
