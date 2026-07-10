@@ -37,8 +37,14 @@ function sendTelemetry(path: string, payload: TelemetryPayload) {
   const url = `${SECURL_API_BASE_URL}${path}`;
 
   if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
-    navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
-    return;
+    // A JSON Blob is not CORS-safelisted and Safari can silently drop the
+    // cross-origin beacon. The API parses the JSON body independently of its
+    // content type, so text/plain keeps Beacon reliable across browsers.
+    const queued = navigator.sendBeacon(
+      url,
+      new Blob([body], { type: "text/plain;charset=UTF-8" }),
+    );
+    if (queued) return;
   }
 
   void fetch(url, {
