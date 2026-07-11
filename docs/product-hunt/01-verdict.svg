@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="760" viewBox="0 0 1270 760">
+  <rect width="1270" height="760" fill="#060b16"/>
+  <rect x="0" y="0" width="10" height="760" fill="#b56a2c"/>
+  <text x="72" y="86" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">SecURL</text>
+  <text x="72" y="156" fill="#d89a63" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">PASSIVE EXTERNAL POSTURE INTELLIGENCE</text>
+  <text x="72" y="238" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800">Not a list of headers.</text>
+  <text x="72" y="306" fill="#d89a63" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800">A verdict.</text>
+  <text x="72" y="366" fill="#a8b2c6" font-family="Arial, Helvetica, sans-serif" font-size="23">One URL. One evidence-backed read of headers, DNS, TLS,</text>
+  <text x="72" y="399" fill="#a8b2c6" font-family="Arial, Helvetica, sans-serif" font-size="23">third-party exposure, and public security signals.</text>
+  <rect x="72" y="465" width="500" height="76" rx="8" fill="#0c1424" stroke="#26354e"/>
+  <text x="98" y="511" fill="#7a8aa6" font-family="Arial, Helvetica, sans-serif" font-size="22">yourdomain.com</text>
+  <rect x="588" y="465" width="168" height="76" rx="8" fill="#b56a2c"/>
+  <text x="626" y="512" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Scan now</text>
+  <text x="72" y="585" fill="#65728a" font-family="Arial, Helvetica, sans-serif" font-size="18">No login  •  No credentials  •  Results in seconds</text>
+  <rect x="842" y="135" width="332" height="500" rx="8" fill="#0c1424" stroke="#283956"/>
+  <circle cx="1008" cy="294" r="94" fill="none" stroke="#1b2940" stroke-width="18"/>
+  <circle cx="1008" cy="294" r="94" fill="none" stroke="#3b82f6" stroke-width="18" stroke-dasharray="525 66" transform="rotate(-90 1008 294)"/>
+  <text x="975" y="309" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800">B</text>
+  <text x="975" y="349" fill="#93c5fd" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">89 / 100</text>
+  <line x1="886" y1="420" x2="1130" y2="420" stroke="#26354e"/>
+  <text x="886" y="466" fill="#c9d2e3" font-family="Arial, Helvetica, sans-serif" font-size="19">Score drivers</text>
+  <text x="886" y="507" fill="#4ade80" font-family="Arial, Helvetica, sans-serif" font-size="18">+ TLS and certificate health</text>
+  <text x="886" y="545" fill="#fcd34d" font-family="Arial, Helvetica, sans-serif" font-size="18">− Content security policy</text>
+  <text x="886" y="583" fill="#93c5fd" font-family="Arial, Helvetica, sans-serif" font-size="18">Evidence and next actions</text>
+  <text x="72" y="700" fill="#8693aa" font-family="Arial, Helvetica, sans-serif" font-size="18">securl.online</text>
+</svg>
+
