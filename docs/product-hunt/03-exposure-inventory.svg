@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="760" viewBox="0 0 1270 760">
+  <rect width="1270" height="760" fill="#060b16"/>
+  <rect x="0" y="0" width="10" height="760" fill="#22c55e"/>
+  <text x="72" y="86" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">SecURL 1.23</text>
+  <text x="72" y="172" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="800">Your public exposure,</text>
+  <text x="72" y="235" fill="#4ade80" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="800">made reviewable.</text>
+  <text x="72" y="291" fill="#a8b2c6" font-family="Arial, Helvetica, sans-serif" font-size="22">A deterministic inventory of externally observed services, infrastructure,</text>
+  <text x="72" y="322" fill="#a8b2c6" font-family="Arial, Helvetica, sans-serif" font-size="22">identity, and AI signals, without credentials or invasive probing.</text>
+  <rect x="72" y="379" width="1126" height="210" rx="8" fill="#0c1424" stroke="#283956"/>
+  <text x="104" y="422" fill="#72809a" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">OBSERVED SERVICE</text>
+  <text x="402" y="422" fill="#72809a" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">ROLE + FLOW</text>
+  <text x="716" y="422" fill="#72809a" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">INTEGRITY</text>
+  <text x="946" y="422" fill="#72809a" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">REVIEW</text>
+  <line x1="104" y1="446" x2="1166" y2="446" stroke="#26354e"/>
+  <text x="104" y="486" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Cloudflare</text>
+  <text x="402" y="486" fill="#c9d2e3" font-family="Arial, Helvetica, sans-serif" font-size="18">Infrastructure · traffic</text>
+  <text x="716" y="486" fill="#93c5fd" font-family="Arial, Helvetica, sans-serif" font-size="18">Observed at edge</text>
+  <rect x="946" y="463" width="118" height="34" rx="6" fill="#143322" stroke="#225c39"/>
+  <text x="971" y="486" fill="#4ade80" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">ROUTINE</text>
+  <line x1="104" y1="512" x2="1166" y2="512" stroke="#26354e"/>
+  <text x="104" y="553" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">External script</text>
+  <text x="402" y="553" fill="#c9d2e3" font-family="Arial, Helvetica, sans-serif" font-size="18">Third party · browser data</text>
+  <text x="716" y="553" fill="#fcd34d" font-family="Arial, Helvetica, sans-serif" font-size="18">SRI not observed</text>
+  <rect x="946" y="530" width="152" height="34" rx="6" fill="#3a2c10" stroke="#70591f"/>
+  <text x="970" y="553" fill="#fcd34d" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">PRIORITISE</text>
+  <text x="72" y="640" fill="#d1d8e5" font-family="Arial, Helvetica, sans-serif" font-size="21">Stable IDs  •  confidence  •  evidence  •  next action  •  drift-friendly output</text>
+  <text x="72" y="700" fill="#8693aa" font-family="Arial, Helvetica, sans-serif" font-size="18">securl/exposure-inventory  •  securl scan example.com --format exposure</text>
+</svg>
