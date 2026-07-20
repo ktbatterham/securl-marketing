@@ -91,7 +91,9 @@ export function Hero() {
     if (!input) return;
     const target = input.startsWith("http") ? input : `https://${input}`;
     recordFunnelHandoff({ target, mode: "landing:hero_scan", format: "web_scan" });
-    window.open(buildScannerUrl(target), "_blank");
+    // Continue in the same tab so the primary funnel action cannot be blocked as a
+    // popup and browser history still provides a natural route back to the landing page.
+    window.location.assign(buildScannerUrl(target));
   }
 
   return (
