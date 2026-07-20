@@ -157,7 +157,7 @@ export function Hero() {
           className="btn-glow shrink-0 rounded-2xl px-7 py-4 text-base font-bold text-white"
           style={{ background: "#b56a2c" }}
         >
-          Scan now
+          Scan my site free
         </button>
       </form>
 
