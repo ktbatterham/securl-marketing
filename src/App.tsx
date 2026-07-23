@@ -8,11 +8,18 @@ import { Footer } from "./components/Footer";
 import { FunnelRoutes } from "./components/FunnelRoutes";
 import { recordPageLoad } from "./lib/telemetry";
 import { useEffect } from "react";
+import { MobileReportBridge } from "./components/MobileReportBridge";
 
 export default function App() {
+  const isMobileBridge = /^\/m\/[^/]+\/?$/.test(window.location.pathname);
+
   useEffect(() => {
-    recordPageLoad();
-  }, []);
+    if (!isMobileBridge) recordPageLoad();
+  }, [isMobileBridge]);
+
+  if (isMobileBridge) {
+    return <MobileReportBridge />;
+  }
 
   return (
     <div className="noise relative min-h-screen overflow-x-hidden">
