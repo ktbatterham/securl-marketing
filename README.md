@@ -27,7 +27,9 @@ Runs the site locally with HMR.
 npm run build
 ```
 
-Outputs to `dist/`. This is a pure static site — no backend, no API calls.
+Outputs to `dist/`. The site is statically hosted; privacy-safe page and funnel events are
+sent to the SecURL API, but interactive tools such as the CSP Builder generate their
+content locally and do not send user-entered policy text.
 
 ## Deploy
 
@@ -64,6 +66,7 @@ src/
     CompareTable.tsx — comparison table (SecURL vs alternatives)
     HowItWorks.tsx   — three-step explainer section
     Footer.tsx       — footer with app and mobile download links
+    CspBuilder.tsx   — local CSP generator and scanner handoff
   App.tsx            — page shell with animated gradient background
 ```
 
