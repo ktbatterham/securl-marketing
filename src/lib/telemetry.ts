@@ -72,6 +72,14 @@ export function recordFunnelHandoff({ target, mode, format }: Omit<FunnelEvent, 
   });
 }
 
+export function recordPlaygroundAction(action: "loaded" | "preset" | "copied" | "scanner_handoff", detail?: string) {
+  sendTelemetry("/api/telemetry/event", {
+    event: "playground_action",
+    mode: `csp_builder:${action}`,
+    format: detail ?? null,
+  });
+}
+
 export function buildScannerUrl(target?: string) {
   const url = new URL("https://app.securl.online/");
   url.searchParams.set("utm_source", "securl_landing");

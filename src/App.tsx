@@ -9,9 +9,11 @@ import { FunnelRoutes } from "./components/FunnelRoutes";
 import { recordPageLoad } from "./lib/telemetry";
 import { useEffect } from "react";
 import { MobileReportBridge } from "./components/MobileReportBridge";
+import { CspBuilder } from "./components/CspBuilder";
 
 export default function App() {
   const isMobileBridge = /^\/m\/[^/]+\/?$/.test(window.location.pathname);
+  const isCspBuilder = /^\/tools\/csp-builder\/?$/.test(window.location.pathname);
 
   useEffect(() => {
     if (!isMobileBridge) recordPageLoad();
@@ -19,6 +21,9 @@ export default function App() {
 
   if (isMobileBridge) {
     return <MobileReportBridge />;
+  }
+  if (isCspBuilder) {
+    return <CspBuilder />;
   }
 
   return (
