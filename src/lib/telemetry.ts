@@ -72,10 +72,14 @@ export function recordFunnelHandoff({ target, mode, format }: Omit<FunnelEvent, 
   });
 }
 
-export function recordPlaygroundAction(action: "loaded" | "preset" | "copied" | "scanner_handoff", detail?: string) {
+export function recordPlaygroundAction(
+  action: "loaded" | "preset" | "copied" | "scanner_handoff" | "guide_handoff",
+  detail?: string,
+  surface = "csp_builder",
+) {
   sendTelemetry("/api/telemetry/event", {
     event: "playground_action",
-    mode: `csp_builder:${action}`,
+    mode: `${surface}:${action}`,
     format: detail ?? null,
   });
 }

@@ -1,4 +1,4 @@
-import { Check, Clipboard, ExternalLink, ShieldAlert, ShieldCheck, Sparkles } from "lucide-react";
+import { BellRing, Check, Clipboard, ExternalLink, ShieldAlert, ShieldCheck, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { buildScannerUrl, recordFunnelHandoff, recordPlaygroundAction } from "../lib/telemetry";
 import { Footer } from "./Footer";
@@ -151,6 +151,17 @@ export function CspBuilder() {
       return buildScannerUrl();
     }
   })();
+  const normalizedTarget = (() => {
+    if (!target) return null;
+    try {
+      return new URL(target.includes("://") ? target : `https://${target}`).toString();
+    } catch {
+      return null;
+    }
+  })();
+  const headerWatchUrl = normalizedTarget
+    ? `headerwatch://add?url=${encodeURIComponent(normalizedTarget)}`
+    : "https://apps.apple.com/app/header-watch/id6774599437";
 
   return (
     <div className="noise min-h-screen bg-[#070b14]">
@@ -303,6 +314,48 @@ export function CspBuilder() {
               >
                 Scan the deployed policy <ExternalLink className="h-4 w-4" />
               </a>
+              <div className="mt-5 border-t border-white/10 pt-5">
+                <div className="flex gap-3">
+                  <BellRing className="mt-0.5 h-5 w-5 shrink-0 text-[#d89a63]" />
+                  <div>
+                    <p className="text-sm font-bold text-white">Keep the policy from silently drifting.</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                      Header Watch opens with this target pre-filled. Saving the watch still requires your tap.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={headerWatchUrl}
+                  onClick={() =>
+                    recordFunnelHandoff({
+                      target: normalizedTarget ?? "https://apps.apple.com/app/header-watch/id6774599437",
+                      mode: "csp_builder:header_watch",
+                      format: "header_watch_app",
+                    })
+                  }
+                  className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-[#d89a63]/35 bg-[#b56a2c]/10 px-5 py-3 text-sm font-bold text-[#f0d5bc] transition hover:bg-[#b56a2c]/20 hover:text-white"
+                >
+                  Watch this policy for drift
+                </a>
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold text-slate-500">
+                  <a
+                    href="https://apps.apple.com/app/header-watch/id6774599437"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => recordFunnelHandoff({ target: "https://apps.apple.com/app/header-watch/id6774599437", mode: "csp_builder:header_watch_install", format: "app_store" })}
+                    className="hover:text-slate-300"
+                  >
+                    Install on iPhone ↗
+                  </a>
+                  <a
+                    href="/downloads"
+                    onClick={() => recordFunnelHandoff({ target: "https://securl.online/downloads", mode: "csp_builder:header_watch_android", format: "android_apk" })}
+                    className="hover:text-slate-300"
+                  >
+                    Android downloads →
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
