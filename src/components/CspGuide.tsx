@@ -25,7 +25,7 @@ export function CspGuide() {
     if (description) {
       description.content = "A practical Content-Security-Policy rollout: choose nonces or hashes, start in Report-Only, remove unsafe allowances, deploy, and verify the public header.";
     }
-    if (canonical) canonical.href = "https://securl.online/guides/content-security-policy";
+    if (canonical) canonical.href = "https://securl.online/guides/content-security-policy/";
     recordPlaygroundAction("loaded", "article", "csp_guide");
   }, []);
 
