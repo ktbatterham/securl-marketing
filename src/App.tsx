@@ -10,10 +10,12 @@ import { recordPageLoad } from "./lib/telemetry";
 import { useEffect } from "react";
 import { MobileReportBridge } from "./components/MobileReportBridge";
 import { CspBuilder } from "./components/CspBuilder";
+import { CspGuide } from "./components/CspGuide";
 
 export default function App() {
   const isMobileBridge = /^\/m\/[^/]+\/?$/.test(window.location.pathname);
   const isCspBuilder = /^\/tools\/csp-builder\/?$/.test(window.location.pathname);
+  const isCspGuide = /^\/guides\/content-security-policy\/?$/.test(window.location.pathname);
 
   useEffect(() => {
     if (!isMobileBridge) recordPageLoad();
@@ -24,6 +26,9 @@ export default function App() {
   }
   if (isCspBuilder) {
     return <CspBuilder />;
+  }
+  if (isCspGuide) {
+    return <CspGuide />;
   }
 
   return (

@@ -67,6 +67,7 @@ src/
     HowItWorks.tsx   — three-step explainer section
     Footer.tsx       — footer with app and mobile download links
     CspBuilder.tsx   — local CSP generator and scanner handoff
+    CspGuide.tsx     — evidence-led CSP rollout guide
   App.tsx            — page shell with animated gradient background
 ```
 
