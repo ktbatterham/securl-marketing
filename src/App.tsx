@@ -11,11 +11,13 @@ import { useEffect } from "react";
 import { MobileReportBridge } from "./components/MobileReportBridge";
 import { CspBuilder } from "./components/CspBuilder";
 import { CspGuide } from "./components/CspGuide";
+import { LinkChecker } from "./components/LinkChecker";
 
 export default function App() {
   const isMobileBridge = /^\/m\/[^/]+\/?$/.test(window.location.pathname);
   const isCspBuilder = /^\/tools\/csp-builder\/?$/.test(window.location.pathname);
   const isCspGuide = /^\/guides\/content-security-policy\/?$/.test(window.location.pathname);
+  const isLinkChecker = /^\/check-link\/?$/.test(window.location.pathname);
 
   useEffect(() => {
     if (!isMobileBridge) recordPageLoad();
@@ -29,6 +31,9 @@ export default function App() {
   }
   if (isCspGuide) {
     return <CspGuide />;
+  }
+  if (isLinkChecker) {
+    return <LinkChecker />;
   }
 
   return (
