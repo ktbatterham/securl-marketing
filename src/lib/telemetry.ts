@@ -73,7 +73,7 @@ export function recordFunnelHandoff({ target, mode, format }: Omit<FunnelEvent, 
 }
 
 export function recordPlaygroundAction(
-  action: "loaded" | "preset" | "copied" | "scanner_handoff" | "guide_handoff",
+  action: "loaded" | "preset" | "copied" | "submitted" | "completed" | "failed" | "scanner_handoff" | "guide_handoff",
   detail?: string,
   surface = "csp_builder",
 ) {

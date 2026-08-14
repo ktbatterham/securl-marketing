@@ -27,6 +27,7 @@ export function Nav() {
           <a href="#compare"      className="transition-colors hover:text-white">Compare</a>
           <a href="#how-it-works" className="transition-colors hover:text-white">How it works</a>
           <a href="/tools/csp-builder" className="transition-colors hover:text-white">CSP Builder</a>
+          <a href="/check-link" className="transition-colors hover:text-white">Check a link</a>
           <a href="/downloads"    className="transition-colors hover:text-white">Android</a>
         </nav>
 
@@ -83,6 +84,7 @@ export function Nav() {
             { href: "#compare",      label: "Compare" },
             { href: "#how-it-works", label: "How it works" },
             { href: "/tools/csp-builder", label: "Free CSP Builder" },
+            { href: "/check-link", label: "Check a link" },
             { href: "/downloads",    label: "Android downloads" },
           ].map(({ href, label }) => (
             <a

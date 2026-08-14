@@ -28,6 +28,7 @@ export function Footer() {
             <a href="#compare"      className="transition-colors hover:text-slate-300">Compare</a>
             <a href="#how-it-works" className="transition-colors hover:text-slate-300">How it works</a>
             <a href="/tools/csp-builder" className="transition-colors hover:text-slate-300">CSP Builder</a>
+            <a href="/check-link" className="transition-colors hover:text-slate-300">Check a link</a>
             <a href="/guides/content-security-policy" className="transition-colors hover:text-slate-300">CSP rollout guide</a>
             <a href={buildScannerUrl()} target="_blank" rel="noopener noreferrer" onClick={() => recordFunnelHandoff({ target: "https://app.securl.online", mode: "landing:footer_app", format: "web_app" })} className="transition-colors hover:text-slate-300">Open app ↗</a>
             <a href="https://www.npmjs.com/package/securl" target="_blank" rel="noopener noreferrer" onClick={() => recordFunnelHandoff({ target: "https://www.npmjs.com/package/securl", mode: "landing:footer_npm", format: "npm" })} className="transition-colors hover:text-slate-300">npm ↗</a>
