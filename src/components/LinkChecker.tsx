@@ -40,6 +40,10 @@ function readLinkPrefill() {
   return { url, source };
 }
 
+function linkInspectionEntryPoint(prefill: ReturnType<typeof readLinkPrefill>) {
+  return prefill?.source === "browser_extension" ? "browser_extension" : "manual";
+}
+
 export function LinkChecker() {
   const [prefill] = useState(readLinkPrefill);
   const [input, setInput] = useState(prefill?.url ?? "");
@@ -74,9 +78,9 @@ export function LinkChecker() {
           "Content-Type": "application/json",
           "X-Scan-Owner": getOwnerToken(),
           "X-SecURL-Client": "securl-link-checker",
-          "X-SecURL-Client-Version": "2.0.0",
+          "X-SecURL-Client-Version": "2.0.1",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url, entryPoint: linkInspectionEntryPoint(prefill) }),
       });
       const payload = await response.json();
       if (!response.ok || !payload?.inspection) throw new Error(payload?.error || "The link could not be inspected.");
