@@ -31,19 +31,33 @@ function normalizeInput(value: string) {
   return !trimmed || /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 }
 
+function readLinkPrefill() {
+  const fragment = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const url = fragment.get("url")?.trim();
+  if (!url) return null;
+
+  const source = fragment.get("source") === "browser_extension" ? "browser_extension" : "external";
+  return { url, source };
+}
+
 export function LinkChecker() {
-  const [input, setInput] = useState("");
+  const [prefill] = useState(readLinkPrefill);
+  const [input, setInput] = useState(prefill?.url ?? "");
   const [status, setStatus] = useState<"idle" | "checking" | "complete" | "failed">("idle");
   const [inspection, setInspection] = useState<LinkInspection | null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (prefill) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+      recordPlaygroundAction("preset", prefill.source, "link_check");
+    }
     document.title = "Trace a Link Before You Open It | SecURL";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Reveal a public link's real destination, redirect chain and deceptive URL characteristics without opening it in your browser.");
     const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (canonical) canonical.href = "https://securl.online/check-link";
     recordPlaygroundAction("loaded", undefined, "link_check");
-  }, []);
+  }, [prefill]);
 
   async function checkLink(event: React.FormEvent) {
     event.preventDefault();
