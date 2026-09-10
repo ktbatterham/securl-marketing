@@ -1,18 +1,27 @@
-import { AppWindow, BellDot, Code2, Download, ExternalLink, ShieldCheck, Smartphone } from "lucide-react";
+import { AppWindow, Code2, Download, ExternalLink, Puzzle, ShieldCheck, Smartphone } from "lucide-react";
 import { buildScannerUrl, recordFunnelHandoff } from "../lib/telemetry";
 
-const appStoreLinks = [
+const chromeStoreUrl =
+  "https://chromewebstore.google.com/detail/securl-check-a-link/kjjmblnknjbjgnnfdcaipgpcbihnejej";
+
+const platformLinks = [
   {
-    label: "SecURL",
+    label: "iOS",
     href: "https://apps.apple.com/app/securl/id6774322464",
+    mode: "landing:ios_securl",
+    format: "app_store",
   },
   {
-    label: "Header Watch",
-    href: "https://apps.apple.com/app/header-watch/id6774599437",
+    label: "Android",
+    href: "https://securl.online/downloads",
+    mode: "landing:android_downloads",
+    format: "android_apk",
   },
   {
-    label: "Cert Watch",
-    href: "https://apps.apple.com/app/cert-watch/id6774979236",
+    label: "Chrome",
+    href: chromeStoreUrl,
+    mode: "landing:chrome_extension",
+    format: "chrome_web_store",
   },
 ];
 
@@ -28,11 +37,11 @@ const routes = [
   },
   {
     Icon: Smartphone,
-    title: "Install the iOS suite",
-    body: "SecURL, Header Watch, and Cert Watch are live on the App Store for quick checks and watch-list workflows.",
+    title: "Install SecURL on iOS",
+    body: "Check links and QR codes, scan public sites, and monitor certificates and security posture from one app.",
     href: "https://apps.apple.com/app/securl/id6774322464",
     cta: "View SecURL app",
-    mode: "landing:ios_suite",
+    mode: "landing:ios_securl",
     format: "app_store",
   },
   {
@@ -43,6 +52,15 @@ const routes = [
     cta: "Open downloads",
     mode: "landing:android_downloads",
     format: "android_apk",
+  },
+  {
+    Icon: Puzzle,
+    title: "Check links from Chrome",
+    body: "Right-click an unfamiliar HTTP or HTTPS link and open it in SecURL's passive Link Checker before deciding whether to visit.",
+    href: chromeStoreUrl,
+    cta: "Add to Chrome",
+    mode: "landing:chrome_extension",
+    format: "chrome_web_store",
   },
   {
     Icon: Code2,
@@ -56,8 +74,8 @@ const routes = [
 ];
 
 const proof = [
-  { label: "iOS apps", value: "3", detail: "SecURL suite live" },
-  { label: "npm pulls", value: "1k+", detail: "weekly package downloads" },
+  { label: "SecURL app", value: "1", detail: "One consolidated mobile app" },
+  { label: "Chrome", value: "1", detail: "Public browser extension" },
   { label: "No account", value: "0", detail: "credentials required" },
 ];
 
@@ -133,36 +151,36 @@ export function FunnelRoutes() {
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-4">
                 <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-emerald-300/20 bg-emerald-300/10">
-                  <BellDot className="h-5 w-5 text-emerald-200" strokeWidth={1.7} />
+                  <ShieldCheck className="h-5 w-5 text-emerald-200" strokeWidth={1.7} />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold tracking-[-0.03em] text-white">
-                    Three focused iOS apps, one backend.
+                    One SecURL, wherever the link finds you.
                   </h3>
                   <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-400">
-                    Use SecURL for full posture, Header Watch for header regression monitoring,
-                    and Cert Watch for certificate expiry alerts.
+                    Use the same restrained Link Checker from mobile, the web, or Chrome, then
+                    keep the app for QR checks, site posture and monitoring.
                   </p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 sm:justify-end">
-                {appStoreLinks.map((app) => (
+                {platformLinks.map((platform) => (
                   <a
-                    key={app.label}
-                    href={app.href}
+                    key={platform.label}
+                    href={platform.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() =>
                       recordFunnelHandoff({
-                        target: app.href,
-                        mode: `landing:ios_${app.label.toLowerCase().replace(/\s+/g, "_")}`,
-                        format: "app_store",
+                        target: platform.href,
+                        mode: platform.mode,
+                        format: platform.format,
                       })
                     }
                     className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.045] px-3.5 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-emerald-200/30 hover:bg-emerald-300/10"
                   >
                     <ShieldCheck className="h-3.5 w-3.5 text-emerald-200" />
-                    {app.label}
+                    {platform.label}
                   </a>
                 ))}
               </div>
