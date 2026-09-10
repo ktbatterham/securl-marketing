@@ -1,5 +1,9 @@
 import { Sparkles } from "lucide-react";
 import { useState } from "react";
+import { recordFunnelHandoff } from "../lib/telemetry";
+
+const chromeStoreUrl =
+  "https://chromewebstore.google.com/detail/securl-check-a-link/kjjmblnknjbjgnnfdcaipgpcbihnejej";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -28,6 +32,15 @@ export function Nav() {
           <a href="#how-it-works" className="transition-colors hover:text-white">How it works</a>
           <a href="/tools/csp-builder" className="transition-colors hover:text-white">CSP Builder</a>
           <a href="/check-link" className="transition-colors hover:text-white">Check a link</a>
+          <a
+            href={chromeStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => recordFunnelHandoff({ target: chromeStoreUrl, mode: "nav:chrome_extension", format: "chrome_web_store" })}
+            className="transition-colors hover:text-white"
+          >
+            Chrome
+          </a>
           <a href="/downloads"    className="transition-colors hover:text-white">Android</a>
         </nav>
 
@@ -85,12 +98,22 @@ export function Nav() {
             { href: "#how-it-works", label: "How it works" },
             { href: "/tools/csp-builder", label: "Free CSP Builder" },
             { href: "/check-link", label: "Check a link" },
+            { href: chromeStoreUrl, label: "Chrome extension" },
             { href: "/downloads",    label: "Android downloads" },
           ].map(({ href, label }) => (
             <a
               key={href}
               href={href}
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                if (href === chromeStoreUrl) {
+                  recordFunnelHandoff({
+                    target: chromeStoreUrl,
+                    mode: "nav:chrome_extension",
+                    format: "chrome_web_store",
+                  });
+                }
+              }}
               className="rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition-colors hover:bg-white/[0.05] hover:text-white"
             >
               {label}
