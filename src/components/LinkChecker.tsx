@@ -59,7 +59,7 @@ export function LinkChecker() {
     document.title = "Check a Link Before You Click | Free Redirect Checker | SecURL";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Check where a suspicious or shortened link really goes. Reveal its redirect chain, final destination and URL warning signs without opening the page in your browser.");
     const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (canonical) canonical.href = "https://securl.online/check-link";
+    if (canonical) canonical.href = "https://securl.online/check-link/";
     recordPlaygroundAction("loaded", undefined, "link_check");
   }, [prefill]);
 
