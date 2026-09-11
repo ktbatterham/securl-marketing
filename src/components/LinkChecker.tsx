@@ -56,8 +56,8 @@ export function LinkChecker() {
       window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
       recordPlaygroundAction("preset", prefill.source, "link_check");
     }
-    document.title = "Trace a Link Before You Open It | SecURL";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Reveal a public link's real destination, redirect chain and deceptive URL characteristics without opening it in your browser.");
+    document.title = "Check a Link Before You Click | Free Redirect Checker | SecURL";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Check where a suspicious or shortened link really goes. Reveal its redirect chain, final destination and URL warning signs without opening the page in your browser.");
     const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (canonical) canonical.href = "https://securl.online/check-link";
     recordPlaygroundAction("loaded", undefined, "link_check");
