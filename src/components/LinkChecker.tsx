@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AlertTriangle, ArrowRight, CheckCircle2, CornerDownRight, Link2, Search, ShieldAlert } from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, CornerDownRight, Link2, Search, Share2, ShieldAlert } from "lucide-react";
 import { Footer } from "./Footer";
 import { recordFunnelHandoff, recordPlaygroundAction } from "../lib/telemetry";
 
@@ -36,7 +36,10 @@ function readLinkPrefill() {
   const url = fragment.get("url")?.trim();
   if (!url) return null;
 
-  const source = fragment.get("source") === "browser_extension" ? "browser_extension" : "external";
+  const requestedSource = fragment.get("source");
+  const source = requestedSource === "browser_extension"
+    ? "browser_extension"
+    : requestedSource === "shared_result" ? "shared_result" : "external";
   return { url, source };
 }
 
@@ -50,6 +53,7 @@ export function LinkChecker() {
   const [status, setStatus] = useState<"idle" | "checking" | "complete" | "failed">("idle");
   const [inspection, setInspection] = useState<LinkInspection | null>(null);
   const [error, setError] = useState("");
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied" | "shared" | "failed">("idle");
 
   useEffect(() => {
     if (prefill) {
@@ -70,6 +74,7 @@ export function LinkChecker() {
     setStatus("checking");
     setInspection(null);
     setError("");
+    setShareStatus("idle");
     recordPlaygroundAction("submitted", undefined, "link_check");
     try {
       const response = await fetch(`${API_BASE_URL}/api/link-checks`, {
@@ -98,6 +103,43 @@ export function LinkChecker() {
   const scanUrl = inspection?.destinationUrl
     ? `https://app.securl.online/?utm_source=before_you_click&utm_medium=web&utm_campaign=link_check_posture&url=${encodeURIComponent(inspection.destinationUrl)}`
     : null;
+  const canShareExactLink = inspection
+    ? (() => {
+        const checkedUrl = new URL(inspection.normalizedUrl);
+        return !checkedUrl.username && !checkedUrl.password;
+      })()
+    : false;
+
+  async function shareResult() {
+    if (!inspection || !canShareExactLink) return;
+    const shareUrl = new URL("/check-link/", window.location.origin);
+    shareUrl.hash = new URLSearchParams({
+      url: inspection.normalizedUrl,
+      source: "shared_result",
+    }).toString();
+    const redirectCount = Math.max(0, inspection.redirects.length - 1);
+    const text = [
+      `SecURL link check: ${inspection.verdict.title}`,
+      `Final host: ${destination?.hostname || "not contacted"}`,
+      `Redirects: ${redirectCount}`,
+      "This is link-level evidence, not a guarantee that the destination is safe.",
+    ].join("\n");
+
+    try {
+      if (typeof navigator.share === "function") {
+        await navigator.share({ title: "SecURL link check", text, url: shareUrl.toString() });
+        setShareStatus("shared");
+        recordPlaygroundAction("shared", "native", "link_check");
+      } else {
+        await navigator.clipboard.writeText(`${text}\n\nRecheck the exact link with SecURL:\n${shareUrl}`);
+        setShareStatus("copied");
+        recordPlaygroundAction("shared", "clipboard", "link_check");
+      }
+    } catch (caught) {
+      if (caught instanceof DOMException && caught.name === "AbortError") return;
+      setShareStatus("failed");
+    }
+  }
 
   return (
     <div className="noise min-h-screen bg-[#070b14] text-slate-100">
@@ -132,7 +174,15 @@ export function LinkChecker() {
 
             <div className="border-b border-white/10 px-7 py-6"><h3 className="text-sm font-bold text-white">What to notice</h3>{inspection.signals.length ? <ul className="mt-4 space-y-3">{inspection.signals.map((item) => <li key={item.id} className="rounded-xl border border-white/8 bg-white/[0.025] p-4"><div className="flex items-start gap-3">{item.level === "high" ? <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-rose-300" /> : item.level === "attention" ? <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" /> : <CornerDownRight className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />}<div><p className="text-sm font-semibold text-slate-200">{item.title}</p><p className="mt-1 text-xs leading-5 text-slate-500">{item.detail}</p></div></div></li>)}</ul> : <p className="mt-3 text-sm text-slate-500">No encoded hostname, hidden destination, unusual port, attachment response or concerning redirect change was observed.</p>}</div>
 
-            <div className="flex flex-col gap-4 bg-white/[0.02] p-7 sm:flex-row sm:items-center sm:justify-between"><p className="max-w-xl text-xs leading-5 text-slate-500">{inspection.limitations.join(" ")}</p>{scanUrl && <a href={scanUrl} onClick={() => recordFunnelHandoff({ target: inspection.destinationUrl, mode: "link_check:destination_posture", format: "web_report" })} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[#b56a2c]/40 px-5 py-3 text-sm font-bold text-[#d89a63] hover:bg-[#b56a2c]/10">Scan destination posture <ArrowRight className="h-4 w-4" /></a>}</div>
+            <div className="bg-white/[0.02] p-7">
+              <p className="text-xs leading-5 text-slate-500">{inspection.limitations.join(" ")}</p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                {canShareExactLink && <button type="button" onClick={shareResult} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#b56a2c] px-5 py-3 text-sm font-bold text-white hover:bg-[#c57a3c]"><Share2 className="h-4 w-4" />{shareStatus === "copied" ? "Recheck link copied" : shareStatus === "shared" ? "Shared" : "Share this result"}</button>}
+                {scanUrl && <a href={scanUrl} onClick={() => recordFunnelHandoff({ target: inspection.destinationUrl, mode: "link_check:destination_posture", format: "web_report" })} className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#b56a2c]/40 px-5 py-3 text-sm font-bold text-[#d89a63] hover:bg-[#b56a2c]/10">Scan destination posture <ArrowRight className="h-4 w-4" /></a>}
+              </div>
+              <p className="mt-3 text-xs text-slate-600">{canShareExactLink ? "Sharing includes the exact link you checked. The recipient chooses whether to run a fresh passive check." : "Links containing embedded credentials cannot be shared by SecURL."}</p>
+              {shareStatus === "failed" && <p className="mt-2 text-xs text-rose-300" role="status">This browser could not share or copy the result.</p>}
+            </div>
           </section>
         )}
       </main>
