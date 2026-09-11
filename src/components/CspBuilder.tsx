@@ -123,10 +123,10 @@ export function CspBuilder() {
   const output = useMemo(() => snippetFor(snippet, header), [header, snippet]);
 
   useEffect(() => {
-    document.title = "Free CSP Builder — Generate a Content Security Policy | SecURL";
+    document.title = "Free CSP Builder | Generate a Content Security Policy | SecURL";
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (description) description.content = "Build a Content-Security-Policy visually, catch unsafe allowances, and copy deployment-ready CSP headers for Nginx, Apache, Cloudflare and Vercel.";
+    if (description) description.content = "Build a Content-Security-Policy visually, catch unsafe allowances and copy deployment-ready CSP headers for Nginx, Apache, Cloudflare, Vercel and Netlify.";
     if (canonical) canonical.href = "https://securl.online/tools/csp-builder";
     recordPlaygroundAction("loaded");
   }, []);
