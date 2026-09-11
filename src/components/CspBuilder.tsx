@@ -127,7 +127,7 @@ export function CspBuilder() {
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (description) description.content = "Build a Content-Security-Policy visually, catch unsafe allowances and copy deployment-ready CSP headers for Nginx, Apache, Cloudflare, Vercel and Netlify.";
-    if (canonical) canonical.href = "https://securl.online/tools/csp-builder";
+    if (canonical) canonical.href = "https://securl.online/tools/csp-builder/";
     recordPlaygroundAction("loaded");
   }, []);
 
