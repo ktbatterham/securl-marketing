@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, ArrowRight, CheckCircle2, CornerDownRight, Link2, Search, Share2, ShieldAlert } from "lucide-react";
 import { Footer } from "./Footer";
-import { recordFunnelHandoff, recordPlaygroundAction } from "../lib/telemetry";
+import { recordFunnelHandoff, recordLinkResultShared, recordPlaygroundAction } from "../lib/telemetry";
 
 const API_BASE_URL = "https://securl-app-production.up.railway.app";
 const OWNER_KEY = "securl-link-check-owner";
@@ -129,10 +129,12 @@ export function LinkChecker() {
       if (typeof navigator.share === "function") {
         await navigator.share({ title: "SecURL link check", text, url: shareUrl.toString() });
         setShareStatus("shared");
+        recordLinkResultShared("native");
         recordPlaygroundAction("shared", "native", "link_check");
       } else {
         await navigator.clipboard.writeText(`${text}\n\nRecheck the exact link with SecURL:\n${shareUrl}`);
         setShareStatus("copied");
+        recordLinkResultShared("clipboard");
         recordPlaygroundAction("shared", "clipboard", "link_check");
       }
     } catch (caught) {
