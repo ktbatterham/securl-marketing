@@ -72,6 +72,14 @@ export function recordFunnelHandoff({ target, mode, format }: Omit<FunnelEvent, 
   });
 }
 
+export function recordLinkResultShared(channel: "native" | "clipboard") {
+  sendTelemetry("/api/telemetry/event", {
+    event: "link_result_shared",
+    mode: "link_check",
+    format: channel,
+  });
+}
+
 export function recordPlaygroundAction(
   action: "loaded" | "preset" | "copied" | "shared" | "submitted" | "completed" | "failed" | "scanner_handoff" | "guide_handoff",
   detail?: string,
