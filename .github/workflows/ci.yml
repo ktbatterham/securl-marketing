@@ -27,5 +27,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Test web share target
+        run: npm run test:share-target
+
       - name: Build
         run: npm run build

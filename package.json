@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "verify:mobile-bridge": "node scripts/verifyMobileBridgeBuild.mjs",
     "lint": "eslint .",
+    "test:share-target": "node --test scripts/shareTarget.test.mjs",
     "preview": "vite preview",
     "snapshot:hero": "node scripts/snapshotHeroExamples.mjs",
     "deploy:hostinger": "node scripts/deployHostinger.mjs",
