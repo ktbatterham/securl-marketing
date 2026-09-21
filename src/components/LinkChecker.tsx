@@ -39,12 +39,15 @@ function readLinkPrefill() {
   const requestedSource = fragment.get("source");
   const source = requestedSource === "browser_extension"
     ? "browser_extension"
+    : requestedSource === "web_share_target" ? "web_share_target"
     : requestedSource === "shared_result" ? "shared_result" : "external";
   return { url, source };
 }
 
 function linkInspectionEntryPoint(prefill: ReturnType<typeof readLinkPrefill>) {
-  return prefill?.source === "browser_extension" ? "browser_extension" : "manual";
+  if (prefill?.source === "browser_extension") return "browser_extension";
+  if (prefill?.source === "web_share_target") return "web_share_target";
+  return "manual";
 }
 
 export function LinkChecker() {

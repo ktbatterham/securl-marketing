@@ -29,10 +29,12 @@ function sendTelemetry(path: string, payload: TelemetryPayload) {
     return;
   }
 
+  const currentUrl = typeof window !== "undefined" ? new URL(window.location.href) : null;
+  if (currentUrl) currentUrl.hash = "";
   const body = JSON.stringify({
     ...payload,
     referrer: typeof document !== "undefined" ? document.referrer : "",
-    currentUrl: typeof window !== "undefined" ? window.location.href : "",
+    currentUrl: currentUrl?.toString() ?? "",
   });
   const url = `${SECURL_API_BASE_URL}${path}`;
 
