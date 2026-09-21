@@ -2,6 +2,9 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
+# Chrome requires a JSON-compatible type for installable web app manifests.
+AddType application/manifest+json .webmanifest
+
 # Serve privacy.html cleanly at /privacy
 RewriteRule ^privacy$ /privacy.html [L]
 
@@ -22,3 +25,8 @@ Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), 
 Header always set Cross-Origin-Opener-Policy "same-origin"
 Header always set Cross-Origin-Resource-Policy "same-origin"
 Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://securl-app-production.up.railway.app https://app.securl.online; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+
+# Service workers must revalidate so fixes are not held behind static-asset caching.
+<Files "sw.js">
+  Header always set Cache-Control "no-cache, no-store, must-revalidate"
+</Files>
