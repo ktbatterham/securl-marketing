@@ -3,7 +3,7 @@
   "short_name": "SecURL",
   "description": "Trace an unfamiliar or shortened link before opening its destination.",
   "id": "/check-link/",
-  "start_url": "/check-link/?source=installed_web_app",
+  "start_url": "/check-link/",
   "scope": "/check-link/",
   "display": "standalone",
   "background_color": "#070b14",
@@ -19,7 +19,7 @@
       "src": "/pwa/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "share_target": {
