@@ -30,5 +30,8 @@ jobs:
       - name: Test web share target
         run: npm run test:share-target
 
+      - name: Test redacted link sharing
+        run: npm run test:link-share
+
       - name: Build
         run: npm run build
