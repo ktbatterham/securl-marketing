@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, ArrowRight, CheckCircle2, CornerDownRight, Link2, Search, Share2, ShieldAlert } from "lucide-react";
 import { Footer } from "./Footer";
 import { recordFunnelHandoff, recordLinkResultShared, recordPlaygroundAction } from "../lib/telemetry";
+import { redactLinkForSharing } from "../lib/redactSharedLink";
 
 const API_BASE_URL = "https://securl-app-production.up.railway.app";
 const OWNER_KEY = "securl-link-check-owner";
@@ -106,18 +107,13 @@ export function LinkChecker() {
   const scanUrl = inspection?.destinationUrl
     ? `https://app.securl.online/?utm_source=before_you_click&utm_medium=web&utm_campaign=link_check_posture&url=${encodeURIComponent(inspection.destinationUrl)}`
     : null;
-  const canShareExactLink = inspection
-    ? (() => {
-        const checkedUrl = new URL(inspection.normalizedUrl);
-        return !checkedUrl.username && !checkedUrl.password;
-      })()
-    : false;
+  const redactedShareTarget = inspection ? redactLinkForSharing(inspection.normalizedUrl) : null;
 
   async function shareResult() {
-    if (!inspection || !canShareExactLink) return;
+    if (!inspection || !redactedShareTarget) return;
     const shareUrl = new URL("/check-link/", window.location.origin);
     shareUrl.hash = new URLSearchParams({
-      url: inspection.normalizedUrl,
+      url: redactedShareTarget,
       source: "shared_result",
     }).toString();
     const redirectCount = Math.max(0, inspection.redirects.length - 1);
@@ -135,7 +131,7 @@ export function LinkChecker() {
         recordLinkResultShared("native");
         recordPlaygroundAction("shared", "native", "link_check");
       } else {
-        await navigator.clipboard.writeText(`${text}\n\nRecheck the exact link with SecURL:\n${shareUrl}`);
+        await navigator.clipboard.writeText(`${text}\n\nRecheck the redacted destination with SecURL:\n${shareUrl}`);
         setShareStatus("copied");
         recordLinkResultShared("clipboard");
         recordPlaygroundAction("shared", "clipboard", "link_check");
@@ -182,10 +178,10 @@ export function LinkChecker() {
             <div className="bg-white/[0.02] p-7">
               <p className="text-xs leading-5 text-slate-500">{inspection.limitations.join(" ")}</p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-                {canShareExactLink && <button type="button" onClick={shareResult} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#b56a2c] px-5 py-3 text-sm font-bold text-white hover:bg-[#c57a3c]"><Share2 className="h-4 w-4" />{shareStatus === "copied" ? "Recheck link copied" : shareStatus === "shared" ? "Shared" : "Share this result"}</button>}
+                {redactedShareTarget && <button type="button" onClick={shareResult} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#b56a2c] px-5 py-3 text-sm font-bold text-white hover:bg-[#c57a3c]"><Share2 className="h-4 w-4" />{shareStatus === "copied" ? "Recheck link copied" : shareStatus === "shared" ? "Shared" : "Share this result"}</button>}
                 {scanUrl && <a href={scanUrl} onClick={() => recordFunnelHandoff({ target: inspection.destinationUrl, mode: "link_check:destination_posture", format: "web_report" })} className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#b56a2c]/40 px-5 py-3 text-sm font-bold text-[#d89a63] hover:bg-[#b56a2c]/10">Scan destination posture <ArrowRight className="h-4 w-4" /></a>}
               </div>
-              <p className="mt-3 text-xs text-slate-600">{canShareExactLink ? "Sharing includes the exact link you checked. The recipient chooses whether to run a fresh passive check." : "Links containing embedded credentials cannot be shared by SecURL."}</p>
+              <p className="mt-3 text-xs text-slate-600">Sharing removes credentials, query parameters and fragments. The recipient chooses whether to run a fresh passive check on the redacted destination.</p>
               {shareStatus === "failed" && <p className="mt-2 text-xs text-rose-300" role="status">This browser could not share or copy the result.</p>}
             </div>
           </section>
